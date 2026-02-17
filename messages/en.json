@@ -1,0 +1,157 @@
+{
+    "HomePage": {
+        "title": "Boricua Legacy",
+        "header": {
+            "links": {
+                "collection": "Collection",
+                "author": "Author",
+                "mission": "Mission"
+            },
+            "waitlist": "Join the Waitlist"
+        },
+        "collections": {
+            "title": "The Collections",
+            "subtitle": "Curated bundles of history, culture, and merchandise. Scroll to explore the complete sets.",
+            "card": {
+                "label": "Collection",
+                "included": "Included in specific set:",
+                "viewBtn": "View Collection",
+                "merch": "Merch",
+                "book": "Book"
+            },
+            "items": {
+                "c1": {
+                    "title": "The Legacy Collection",
+                    "description": "Immerse yourself in the stories that shaped a nation, accompanied by tools to document your own journey."
+                },
+                "c2": {
+                    "title": "The Diaspora Collection",
+                    "description": "Voices from across the sea, bringing the island spirit to every corner of the world."
+                },
+                "c3": {
+                    "title": "The Future Collection",
+                    "description": "Technological marvels and ancient traditions collide in this forward-looking set."
+                }
+            },
+            "books": {
+                "1": "Boricua Legacy: The Women Who Made History",
+                "2": "Echoes of San Juan",
+                "3": "Digital Coquí"
+            },
+            "resources": {
+                "r1": "Legacy Journal",
+                "r2": "Gold-Foil Bookmark",
+                "r3": "Map of Old San Juan",
+                "r4": "Coquí Sticker Pack",
+                "r5": "Digital Access Key",
+                "r6": "Neon Bookmark"
+            },
+            "merch": {
+                "m1": "Legacy Tote Bag",
+                "m2": "Cobblestone Mug",
+                "m3": "Glitch T-Shirt"
+            }
+        },
+        "hero": {
+            "slides": {
+                "1": {
+                    "headline_1": "Her Story.",
+                    "headline_2": "Her Strength.",
+                    "headline_3": "Her Legacy.",
+                    "subtext": "A premium editorial collection documenting the forgotten queens, warriors, and pioneers of Puerto Rican history.",
+                    "spine": "BORICUA LEGACY"
+                },
+                "2": {
+                    "headline_1": "Voices of",
+                    "headline_2": "The Diaspora.",
+                    "headline_3": "Volume II.",
+                    "subtext": "Exploring the journeys, struggles, and triumphs of Puerto Ricans making their mark across the globe.",
+                    "spine": "DIASPORA VOICES"
+                },
+                "3": {
+                    "headline_1": "Legends of",
+                    "headline_2": "Borikén.",
+                    "headline_3": "Volume III.",
+                    "subtext": "Mythology and folklore come alive in this visual exploration of our island's most ancient stories.",
+                    "spine": "LEGENDS"
+                }
+            },
+            "buttons": {
+                "primary": "Order Now",
+                "secondary": "Read an Excerpt"
+            }
+        },
+        "audience": {
+            "title": "Who We Publish For",
+            "learnMore": "Learn More",
+            "cards": {
+                "families": {
+                    "title": "Families",
+                    "text": "Reconnecting generations through shared stories and heritage."
+                },
+                "educators": {
+                    "title": "Educators",
+                    "text": "Curriculum-ready resources to teach authentic history."
+                },
+                "libraries": {
+                    "title": "Libraries",
+                    "text": "Essential additions to diverse and inclusive collections."
+                },
+                "readers": {
+                    "title": "Readers",
+                    "text": "For anyone seeking depth, beauty, and cultural richness."
+                }
+            }
+        },
+        "author": {
+            "eyebrow": "Meet the Author",
+            "title": "A Journey from Finance to Legacy",
+            "bio_p1": "Born in Ponce, Puerto Rico, Jacqueline Jiménez spent over two decades in the corporate world before answering her own \"call to adventure.\" In 2019, she transitioned to entrepreneurship as a certified Life Coach, fulfilling a mission to help others unlock their potential and define their own legacies.",
+            "bio_p2_pre": "Her debut book, ",
+            "bio_p2_link": "Boricua Legacy",
+            "bio_p2_post": ", applies the Hero’s Journey framework to the lives of twelve extraordinary Puerto Rican women. Merging self-discovery with cultural identity, Jacqueline writes to celebrate the island's unbreakable spirit, proving that our roots are our power and our heritage is our crown.",
+            "badge_label": "Author"
+        },
+        "mission": {
+            "quote": "If we do not document our own history, it will be forgotten.",
+            "label": "The Mission",
+            "pillars": {
+                "preservation": {
+                    "title": "Preservation",
+                    "text": "Safeguarding our oral histories and archival findings for future generations before they fade away."
+                },
+                "education": {
+                    "title": "Education",
+                    "text": "Providing accessible, rigorous resources for classrooms, libraries, and homes to foster learning."
+                },
+                "inspiration": {
+                    "title": "Inspiration",
+                    "text": "Sparking pride through powerful narratives that reflect the strength and beauty of our people."
+                }
+            }
+        }
+    },
+    "Blog": {
+        "title": "Blog",
+        "subtitle": "Stories, insights, and news from the Boricua Legacy community",
+        "empty": "No blog posts yet. Check back soon!",
+        "readMore": "Read More",
+        "notFound": "Post not found",
+        "backToBlog": "Back to Blog"
+    },
+    "Press": {
+        "title": "Press",
+        "subtitle": "Media coverage and press resources for Boricua Legacy",
+        "pressKit": {
+            "title": "Press Kit",
+            "description": "Download our media kit for logos, author photos, and press information.",
+            "download": "Download Press Kit",
+            "contact": "Press Inquiries"
+        },
+        "coverage": {
+            "title": "Media Coverage",
+            "empty": "No press coverage yet.",
+            "readArticle": "Read Article"
+        }
+    }
+}

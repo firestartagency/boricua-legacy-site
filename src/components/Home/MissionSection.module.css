@@ -1,0 +1,147 @@
+.section {
+    padding: 6rem 0;
+    background-color: var(--paper);
+    position: relative;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+/* Quote Column */
+.quoteColumn {
+    position: relative;
+    padding: 2rem 0 2rem 3rem;
+}
+
+.quoteMark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 6rem;
+    color: var(--accent-gold);
+    opacity: 0.4;
+    line-height: 1;
+    font-family: var(--font-noto-serif), serif;
+}
+
+.quote {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1.2;
+    position: relative;
+    z-index: 10;
+    font-family: var(--font-noto-serif), serif;
+}
+
+.missionLabelWrapper {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.separator {
+    width: 4rem;
+    height: 1px;
+    background-color: var(--accent-gold);
+}
+
+.missionLabel {
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    /* tracking-widest */
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+/* Pillars Column */
+.pillarsColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.pillarCard {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid transparent;
+    transition: all 0.3s;
+}
+
+.pillarCard:hover {
+    background-color: white;
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.iconBox {
+    flex-shrink: 0;
+    padding: 0.75rem;
+    border-radius: 9999px;
+    background-color: rgba(0, 80, 160, 0.05);
+    /* primary/5 */
+    color: var(--accent-gold);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.pillarCard:hover .iconBox {
+    background-color: var(--primary);
+    color: white;
+}
+
+/* Material Symbols fix size */
+.iconBox span {
+    font-size: 1.875rem;
+    /* text-3xl */
+}
+
+.pillarTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+    font-family: var(--font-noto-serif), serif;
+}
+
+.pillarCard:hover .pillarTitle {
+    color: var(--primary);
+}
+
+.pillarText {
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .quote {
+        font-size: 3rem;
+        /* text-4xl/5xl */
+    }
+
+    .quoteMark {
+        font-size: 8rem;
+    }
+}

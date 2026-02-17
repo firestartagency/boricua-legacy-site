@@ -1,0 +1,279 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+    /* Strict Viewport Sizing for "Full Frame" feel */
+    width: 90vw;
+    height: 80vh;
+    /* Fallback */
+    height: 80dvh;
+    /* Target height */
+    /* THE SAFETY VALVE: Ensures card is smaller than Viewport - Header - Buffer */
+    max-height: calc(100dvh - 6rem);
+    max-width: 1600px;
+    /* Cap width on ultra-wide screens */
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.visualSide {
+    background-color: var(--theme-color-bg, #f3f4f6);
+    padding: 0;
+    /* Remove padding for edge-to-edge look */
+    width: 100%;
+    /* Mobile: Split height, e.g., 40% visual, 60% text */
+    height: 40%;
+    min-height: unset;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Grid Container */
+.gridContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 2px;
+    /* Tiny gap for clean separation */
+    width: 100%;
+    height: 100%;
+}
+
+/* Grid Items */
+.gridItem {
+    position: relative;
+    overflow: hidden;
+    background-color: white;
+    /* No border radius on internal items for edge-to-edge look,
+       or keep it if "bento" style desired. Let's go fully flush. */
+    border-radius: 0;
+}
+
+.gridItem:hover .gridImage {
+    transform: scale(1.05);
+    /* Zoom effect on image instead of item transform */
+}
+
+/* Featured Item (The Book) - Made larger */
+.itemFeatured {
+    grid-row: span 2;
+    grid-column: span 1;
+}
+
+/* Generic Image inside grid item */
+.gridImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.infoSide {
+    padding: 1.5rem;
+    flex: 1;
+    /* Takes remaining height in vertical mobile layout */
+    display: flex;
+    flex-direction: column;
+
+    /* Critical: Internal Scroll */
+    overflow-y: auto;
+
+    /* Ensure content doesn't force parent growth */
+    min-height: 0;
+}
+
+.collectionLabel {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    color: #9ca3af;
+    margin-bottom: 0.5rem;
+}
+
+.title {
+    font-size: 1.75rem;
+    font-family: var(--font-noto-serif), serif;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #111;
+    line-height: 1.1;
+}
+
+.description {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+.priceSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: linear-gradient(135deg, #fef9e7 0%, #fdf2d8 100%);
+    border: 1px solid var(--accent-gold, #d4af37);
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.priceLabel {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    color: #666;
+}
+
+.priceValue {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-gold, #d4af37);
+    font-family: var(--font-noto-serif), serif;
+}
+
+.includesList {
+    margin-bottom: 2rem;
+}
+
+.includesHeader {
+    font-size: 0.875rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    color: #374151;
+}
+
+.includesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+}
+
+.includeItem {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: var(--text-main);
+    padding: 0.5rem;
+    background: transparent;
+    border: 1px solid var(--accent-gold);
+    border-radius: 0.25rem;
+}
+
+.checkIcon {
+    color: var(--accent-gold);
+    flex-shrink: 0;
+}
+
+.merchSection {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.merchPreview {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.merchThumb {
+    width: 60px;
+    height: 60px;
+    background: #eee;
+    border-radius: 0.5rem;
+    background-size: cover;
+    background-position: center;
+    background-image: var(--merch-image);
+}
+
+.merchInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.merchName {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #111;
+}
+
+.merchPrice {
+    font-size: 0.875rem;
+    color: #666;
+}
+
+.ctaButton {
+    background-color: var(--accent-red);
+    color: #fff;
+    border: none;
+    font-family: var(--font-noto-serif), serif;
+    font-weight: 700;
+    font-size: 1rem;
+    height: 3rem;
+    padding: 0 2rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.ctaButton:hover {
+    background-color: #c9151c;
+    transform: translateY(-1px);
+}
+
+/* Desktop / Tablet Styles */
+@media (min-width: 1024px) {
+    .card {
+        flex-direction: row;
+        height: 100%;
+        /* Fill the container provided by scroll wrapper */
+    }
+
+    .visualSide {
+        width: 55%;
+        /* Give more space to visuals */
+        height: 100%;
+        /* Fill full height */
+        padding: 0;
+        /* Flush to edges */
+    }
+
+    .infoSide {
+        width: 45%;
+        padding: 3.5rem;
+        overflow-y: auto;
+        /* Allow scrolling text if it gets too long, but keep layout pinned */
+        max-height: 100%;
+    }
+
+    .title {
+        font-size: 2.5rem;
+    }
+
+    /* 
+       We want a BENTO BOX style grid.
+       3 columns, 2 rows.
+       Book takes 2 rows, 2 columns (Larger focus)
+       Other items fill remaining spots
+       Or keep 2x2 but larger.
+    */
+    .gridContainer {
+        grid-template-columns: 2fr 1fr;
+        /* Featured item wider */
+        grid-template-rows: 1fr 1fr;
+        gap: 2px;
+    }
+}

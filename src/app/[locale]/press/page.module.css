@@ -1,0 +1,223 @@
+.main {
+    min-height: 100vh;
+    background: white;
+}
+
+.hero {
+    padding: 8rem 2rem 4rem;
+    text-align: center;
+    background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: white;
+}
+
+.title {
+    font-family: var(--font-noto-serif), serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+/* Press Kit Section */
+.pressKit {
+    background: linear-gradient(135deg, #fef9e7 0%, #fdf2d8 100%);
+    border: 1px solid var(--accent-gold, #d4af37);
+    border-radius: 1rem;
+    padding: 2.5rem;
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+.pressKit h2 {
+    font-family: var(--font-noto-serif), serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 1rem;
+}
+
+.pressKit p {
+    color: #666;
+    margin-bottom: 2rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pressKitActions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.downloadBtn,
+.contactBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.downloadBtn {
+    background: var(--accent-gold, #d4af37);
+    color: white;
+}
+
+.downloadBtn:hover {
+    background: #b8962e;
+    transform: translateY(-2px);
+}
+
+.contactBtn {
+    background: white;
+    color: #111;
+    border: 2px solid #111;
+}
+
+.contactBtn:hover {
+    background: #111;
+    color: white;
+}
+
+/* Coverage Section */
+.coverage h2 {
+    font-family: var(--font-noto-serif), serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: #666;
+    background: #f9fafb;
+    border-radius: 1rem;
+}
+
+.mentionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.mentionCard {
+    background: #f9fafb;
+    border-radius: 1rem;
+    padding: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mentionCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
+}
+
+.outletInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.outletLogo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.outletName {
+    font-weight: 700;
+    color: #374151;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.875rem;
+}
+
+.headline {
+    font-family: var(--font-noto-serif), serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.quote {
+    font-style: italic;
+    color: #666;
+    border-left: 3px solid var(--accent-gold, #d4af37);
+    padding-left: 1rem;
+    margin: 0 0 1rem 0;
+    line-height: 1.6;
+}
+
+.mentionMeta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.875rem;
+}
+
+.date {
+    color: #9ca3af;
+}
+
+.articleLink {
+    color: var(--accent-gold, #d4af37);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.articleLink:hover {
+    color: #b8962e;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 6rem 1rem 3rem;
+    }
+
+    .content {
+        padding: 2rem 1rem;
+    }
+
+    .pressKit {
+        padding: 1.5rem;
+    }
+
+    .pressKitActions {
+        flex-direction: column;
+    }
+
+    .mentionCard {
+        padding: 1.5rem;
+    }
+}

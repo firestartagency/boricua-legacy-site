@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Boricua Legacy - Book Detail</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&amp;family=Great+Vibes&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0050A0", // True Flag Blue
+                        "accent-gold": "#D4AF37", // Royal Metallic Gold
+                        "accent-red": "#ED1C24", // Boricua Red
+                        "paper": "#fdfbf7", // Warm paper white
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#0f1923",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "signature": ["Great Vibes", "cursive"],
+                    },
+                    backgroundImage: {
+                        'paper-texture': "radial-gradient(#e5e7eb 1px, transparent 1px)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .gold-shimmer {
+            background: linear-gradient(45deg, #b88a44 0%, #eebd66 25%, #b88a44 50%, #eebd66 75%, #b88a44 100%);
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+        }
+        @keyframes shimmer {
+            to {
+                background-position: 200% center;
+            }
+        }
+        .text-shadow-sm {
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .book-spine-effect {
+             box-shadow: inset 10px 0 20px -10px rgba(0,0,0,0.4), 
+                         5px 5px 15px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body class="font-display bg-paper text-[#101418] antialiased">
+<header class="sticky top-0 z-50 w-full bg-primary border-b-2 border-accent-gold shadow-md">
+<div class="max-w-[1280px] mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<a class="flex items-center gap-3 group" href="#">
+<img alt="Boricua Legacy Gold Flame Icon" class="h-6 w-auto object-contain transition-transform group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAluA6IZyvyFm0-C4NVpH7oZ0MQb1-uNJqDCogNE1saLaDqKTqi_vEBGwZpUjGpwvlbBtny-JDGru8ajDKzPwKEiYtrGMczAyqAIce0w_LRcYnJiAHDcyp-rTETSh9YywBBGisJ6eQuSYs3TLKuSfHY3w3EPBVKEFIDMwl_DVyDcUR2pfH8uy1U7jRUD-lIic-q0tPne0neEfxxsAJDuyzMXS6hQvjCOPtok4Y938DEDLErVeeeQo5rk2VFCvbFWLnaUEeKQaZdpaJu"/>
+<h1 class="text-white text-lg font-bold tracking-widest uppercase">Boricua Legacy</h1>
+</a>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-white/90 hover:text-accent-gold text-sm font-medium transition-colors uppercase tracking-wide" href="#">Books</a>
+<a class="text-white/90 hover:text-accent-gold text-sm font-medium transition-colors uppercase tracking-wide" href="#">Waitlist</a>
+<a class="text-white/90 hover:text-accent-gold text-sm font-medium transition-colors uppercase tracking-wide" href="#">Contact</a>
+</nav>
+<button class="md:hidden text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<main class="flex flex-col w-full">
+<div class="max-w-[1280px] mx-auto w-full px-6 pt-8 pb-4">
+<div class="flex items-center text-xs text-gray-500 uppercase tracking-widest gap-2 mb-2">
+<a class="hover:text-primary" href="#">Books</a>
+<span class="text-accent-gold">/</span>
+<a class="hover:text-primary" href="#">Collection</a>
+<span class="text-accent-gold">/</span>
+<span class="text-gray-800 font-bold">Boricua Legacy</span>
+</div>
+<div class="h-[1px] w-full bg-gradient-to-r from-accent-gold/50 to-transparent"></div>
+</div>
+<section class="max-w-[1280px] mx-auto px-6 py-8 md:py-12">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-12">
+<div class="md:col-span-5 flex flex-col items-center">
+<div class="relative w-[300px] md:w-[360px] aspect-[2/3] mb-8 group perspective-[1000px]">
+<div class="relative w-full h-full transform transition-transform duration-500 group-hover:rotate-y-6 rotate-y-[-10deg] rotate-x-[5deg] rounded-r-md bg-cover bg-center book-spine-effect" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAoEjJGiJJbM-ssmYEGktjLdecs-7LHMnW6bX3prmlGgwPmJ49zgRJAA2Yyceg-NNPXiC_Mq2k4EnR_tcYVgJthFRg83rq3Rl9TToS5qUgNRcHbxZUNoKO9i9_kMWsdklGuYcWMDF1hezJuf3RdAkaIa3bTg-kV1RiZcsGiBj-ggQrC_snvguQAXOO_WDNZ36WdNoE_4EVzQtX9cCfMqDw3LA_RQBAxVgNO6O4WS8pcewZgqD7a4GTPjF3QehIl5UlyxSnMXIr2Gc0M');">
+<div class="absolute -left-[18px] top-[2px] bottom-[2px] w-[18px] bg-[#0f1923] transform skew-y-[20deg] origin-right shadow-inner flex items-center justify-center overflow-hidden border-l border-gray-800">
+</div>
+<div class="absolute inset-0 rounded-r-md ring-1 ring-inset ring-white/10"></div>
+<div class="absolute inset-0 rounded-r-md shadow-[0_0_15px_rgba(212,175,55,0.3)] pointer-events-none"></div>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="w-16 h-24 border border-accent-gold rounded overflow-hidden hover:opacity-80 transition-opacity focus:ring-2 ring-primary">
+<img alt="Front cover" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoEjJGiJJbM-ssmYEGktjLdecs-7LHMnW6bX3prmlGgwPmJ49zgRJAA2Yyceg-NNPXiC_Mq2k4EnR_tcYVgJthFRg83rq3Rl9TToS5qUgNRcHbxZUNoKO9i9_kMWsdklGuYcWMDF1hezJuf3RdAkaIa3bTg-kV1RiZcsGiBj-ggQrC_snvguQAXOO_WDNZ36WdNoE_4EVzQtX9cCfMqDw3LA_RQBAxVgNO6O4WS8pcewZgqD7a4GTPjF3QehIl5UlyxSnMXIr2Gc0M"/>
+</button>
+<button class="w-16 h-24 border border-gray-200 rounded overflow-hidden hover:opacity-80 transition-opacity bg-gray-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-gray-400">menu_book</span>
+</button>
+<button class="w-16 h-24 border border-gray-200 rounded overflow-hidden hover:opacity-80 transition-opacity bg-gray-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-gray-400">format_quote</span>
+</button>
+</div>
+</div>
+<div class="md:col-span-7 flex flex-col justify-start pt-4">
+<div class="mb-2 flex items-center gap-2">
+<span class="inline-block w-2 h-2 rounded-full bg-accent-gold animate-pulse"></span>
+<span class="text-xs font-bold text-accent-gold uppercase tracking-wider">In Stock</span>
+</div>
+<h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-[#101418] mb-2 leading-tight">
+                    Boricua Legacy: <br/>
+<span class="italic text-primary">The Women Who Made History</span>
+</h1>
+<p class="text-lg text-gray-500 mb-6 font-medium">By Jacqueline Jiménez</p>
+<p class="text-xl text-gray-700 leading-relaxed mb-8 border-l-4 border-accent-gold/30 pl-6 italic">
+                    "A monumental tribute that reclaims the narrative, honoring the forgotten queens and warriors who forged a nation's soul."
+                </p>
+<div class="flex flex-wrap gap-4 mb-8">
+<label class="cursor-pointer relative">
+<input checked="" class="peer sr-only" name="format" type="radio"/>
+<div class="px-6 py-3 border-2 border-accent-gold rounded bg-paper-texture peer-checked:bg-primary/5 peer-checked:shadow-inner transition-all hover:bg-white">
+<span class="block text-sm font-bold text-gray-900 uppercase tracking-wide">Hardcover</span>
+<span class="block text-xs text-gray-500">$34.99</span>
+</div>
+<div class="absolute -top-2 -right-2 bg-accent-gold text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Best Seller</div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="format" type="radio"/>
+<div class="px-6 py-3 border border-gray-300 rounded hover:border-accent-gold transition-all bg-white">
+<span class="block text-sm font-bold text-gray-500 peer-checked:text-gray-900 uppercase tracking-wide">eBook</span>
+<span class="block text-xs text-gray-500">$14.99</span>
+</div>
+</label>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 mb-6">
+<button class="flex-1 sm:flex-none bg-accent-red hover:bg-red-700 text-white text-lg font-bold h-14 px-10 rounded shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2">
+                        Buy Now
+                        <span class="material-symbols-outlined">shopping_bag</span>
+</button>
+<button class="flex-1 sm:flex-none bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-white text-lg font-bold h-14 px-8 rounded transition-all flex items-center justify-center">
+                        Get Updates
+                    </button>
+</div>
+<a class="text-accent-gold text-sm font-bold hover:underline decoration-accent-gold underline-offset-4 flex items-center gap-1" href="#">
+                    Ordering for a school or library? Bulk Orders 
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+<section class="border-y border-accent-gold/20 bg-background-light">
+<div class="max-w-[1280px] mx-auto px-6 py-6">
+<div class="grid grid-cols-2 md:grid-cols-5 gap-y-6 gap-x-4 text-center">
+<div class="flex flex-col md:border-r border-accent-gold/30">
+<span class="text-xs text-gray-500 uppercase tracking-widest mb-1">Pages</span>
+<span class="font-display font-bold text-lg text-primary">342</span>
+</div>
+<div class="flex flex-col md:border-r border-accent-gold/30">
+<span class="text-xs text-gray-500 uppercase tracking-widest mb-1">Publication</span>
+<span class="font-display font-bold text-lg text-primary">Oct 2024</span>
+</div>
+<div class="flex flex-col md:border-r border-accent-gold/30">
+<span class="text-xs text-gray-500 uppercase tracking-widest mb-1">Language</span>
+<span class="font-display font-bold text-lg text-primary">English / Spanish</span>
+</div>
+<div class="flex flex-col md:border-r border-accent-gold/30">
+<span class="text-xs text-gray-500 uppercase tracking-widest mb-1">ISBN</span>
+<span class="font-display font-bold text-lg text-primary">978-1-5266</span>
+</div>
+<div class="flex flex-col col-span-2 md:col-span-1">
+<span class="text-xs text-gray-500 uppercase tracking-widest mb-1">Audience</span>
+<span class="font-display font-bold text-lg text-primary">General / YA</span>
+</div>
+</div>
+</div>
+</section>
+<section class="py-20 bg-paper relative">
+<div class="absolute inset-0 bg-paper-texture [background-size:24px_24px] opacity-10"></div>
+<div class="max-w-[1280px] mx-auto px-6 relative z-10 grid md:grid-cols-12 gap-16">
+<div class="md:col-span-5">
+<h2 class="text-3xl font-display font-bold text-[#101418] mb-6 inline-block border-b-2 border-accent-gold pb-2">About This Book</h2>
+<div class="space-y-6 text-gray-600 leading-relaxed text-lg">
+<p>
+<span class="font-bold text-primary">Boricua Legacy</span> isn't just a history book; it is an artifact of remembrance. Born from over two decades of research in archives from San Juan to Seville, this volume meticulously reconstructs the lives of women who were often relegated to footnotes.
+                    </p>
+<p>
+                        From the Taíno cacicas who led early resistance against colonization to the 20th-century labor organizers who revolutionized the Caribbean workforce, these stories are told with narrative flair and historical rigor.
+                    </p>
+<p>
+                        Designed as a heirloom object, the book features gold-foiled typography, premium linen binding, and original illustrations that serve as a mirror for our daughters and a map for our sons.
+                    </p>
+</div>
+</div>
+<div class="md:col-span-7 flex flex-col gap-6">
+<div class="flex justify-between items-end mb-2">
+<h3 class="text-xl font-bold text-primary">Look Inside</h3>
+<span class="text-sm font-mono text-accent-gold">01 / 06</span>
+</div>
+<div class="relative bg-white p-4 shadow-xl border border-gray-200 rounded-sm">
+<div class="absolute top-0 left-0 h-1 bg-accent-gold w-1/6 z-20"></div>
+<div class="absolute top-0 left-0 h-1 bg-gray-100 w-full z-10"></div>
+<div class="aspect-[16/9] bg-gray-100 relative overflow-hidden group cursor-pointer">
+<img alt="Interior spread showing text and illustration" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJfV9pB7KZ8U_e40EFiBQZX_LrBeLUrt624OVfgKdcqocfO9fEx5l0If8TGtYaQQQ07q7V97sjjlXovPERh5JAM8uY5MbmJyyp5DhLnTnMepP7tiqMoxWkP5SGQIL3u43I6pjZ46536udFYz3WoLCCejkr-XDDHhyw03KbOC3LqXbfi9nbXg3eznPd7hHmstw6asMSoKLnPnm1obh6R9-S83gC7c4F0s-yAmBNEa8kTNYtCP4lPZViOZfXJAo81-vibwcJaSr_JH0u"/>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+<div class="bg-white/90 backdrop-blur-sm p-4 rounded-full opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+<span class="material-symbols-outlined text-primary text-3xl">zoom_in</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-end mt-2">
+<button class="text-accent-red font-bold text-sm uppercase tracking-wide border-b-2 border-accent-red hover:bg-accent-red/5 px-2 py-1 transition-colors">
+                        Get the First Chapter Free
+                    </button>
+</div>
+</div>
+</div>
+</section>
+<section class="py-16 bg-white border-y border-gray-100">
+<div class="max-w-[1280px] mx-auto px-6 grid md:grid-cols-12 gap-12">
+<div class="md:col-span-4 lg:col-span-3">
+<div class="relative p-1">
+<div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent-gold"></div>
+<div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-accent-gold"></div>
+<div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-accent-gold"></div>
+<div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-accent-gold"></div>
+<div class="flex flex-col items-center text-center p-6 border border-accent-gold/10">
+<img alt="Jacqueline Jiménez" class="w-24 h-24 rounded-full object-cover border-2 border-white shadow-md mb-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfF5LlPRF1n3elDbi-xVXpPNLaGt0XYoVf8CdrXSip5W1ETUAhQpupx3q6seZ8MSbQf2IZA8LIJlxuS1bHlCz_MOcPHNJ1Q0mKLesiZsaolsGqbN_oCc4HjVXDA6ASqequU_dc0kliCg-sbuxZ6tYGP_kVmJWdvXbgMwQJqByY4hEbR-KESChNFR7zMEtqqonP7_5IrcxOpv_TL_dpbwbvv2ia7be86KRv10VslnRjJj8INO_V5kgUIXTYdXXfd7tGasjh7MXi77fd"/>
+<h4 class="font-bold text-lg text-primary">Jacqueline Jiménez</h4>
+<p class="text-xs text-gray-500 uppercase tracking-widest mb-3">Author &amp; Historian</p>
+<p class="text-sm text-gray-600 mb-4 italic">"History is not what happened. It is what we choose to remember."</p>
+<div class="font-signature text-2xl text-accent-gold">Jacqueline</div>
+</div>
+</div>
+</div>
+<div class="md:col-span-8 lg:col-span-9 flex flex-col justify-center">
+<h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">Critical Acclaim</h3>
+<div class="grid md:grid-cols-3 gap-6">
+<div class="bg-paper p-6 border border-accent-gold/40 rounded-sm shadow-sm relative">
+<span class="material-symbols-outlined absolute -top-3 left-4 bg-paper px-1 text-accent-gold">format_quote</span>
+<p class="text-sm text-gray-700 mb-4 leading-relaxed">"A masterpiece of cultural restoration. Every page sings with dignity."</p>
+<p class="text-xs font-bold text-primary uppercase">— The Caribbean Review</p>
+</div>
+<div class="bg-paper p-6 border border-accent-gold/40 rounded-sm shadow-sm relative">
+<span class="material-symbols-outlined absolute -top-3 left-4 bg-paper px-1 text-accent-gold">format_quote</span>
+<p class="text-sm text-gray-700 mb-4 leading-relaxed">"Essential reading for anyone seeking to understand the true spirit of Borikén."</p>
+<p class="text-xs font-bold text-primary uppercase">— Literary San Juan</p>
+</div>
+<div class="bg-paper p-6 border border-accent-gold/40 rounded-sm shadow-sm relative">
+<span class="material-symbols-outlined absolute -top-3 left-4 bg-paper px-1 text-accent-gold">format_quote</span>
+<p class="text-sm text-gray-700 mb-4 leading-relaxed">"Jiménez writes with the precision of a scholar and the heart of a poet."</p>
+<p class="text-xs font-bold text-primary uppercase">— Diaspora Weekly</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-20 bg-background-light overflow-hidden">
+<div class="max-w-[1280px] mx-auto px-6">
+<div class="flex items-center justify-between mb-12">
+<h2 class="text-2xl md:text-3xl font-display font-bold text-[#101418]">More From This Collection</h2>
+<a class="text-primary text-sm font-bold hover:text-accent-gold transition-colors flex items-center gap-1" href="#">
+                    View Full Series <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+<div class="group cursor-pointer">
+<div class="relative aspect-[2/3] mb-4 bg-white shadow-md border border-gray-200 transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-xl rounded-sm overflow-hidden">
+<div class="absolute top-0 right-0 w-12 h-12 bg-accent-gold/10 rounded-bl-full z-10"></div>
+<div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-300">
+<span class="material-symbols-outlined text-4xl">book_2</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
+<span class="text-white text-xs font-bold tracking-widest">VOL. II</span>
+</div>
+</div>
+<h3 class="font-display font-bold text-gray-900 group-hover:text-primary transition-colors">Voices of the Diaspora</h3>
+<p class="text-xs text-gray-500 mt-1">Coming Spring 2025</p>
+</div>
+<div class="group cursor-pointer">
+<div class="relative aspect-[2/3] mb-4 bg-white shadow-md border border-gray-200 transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-xl rounded-sm overflow-hidden">
+<div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-300">
+<span class="material-symbols-outlined text-4xl">book_2</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
+<span class="text-white text-xs font-bold tracking-widest">VOL. III</span>
+</div>
+</div>
+<h3 class="font-display font-bold text-gray-900 group-hover:text-primary transition-colors">Legends of Borikén</h3>
+<p class="text-xs text-gray-500 mt-1">Coming Fall 2025</p>
+</div>
+<div class="group cursor-pointer">
+<div class="relative aspect-[2/3] mb-4 bg-white shadow-md border border-gray-200 transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-xl rounded-sm overflow-hidden">
+<div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-300">
+<span class="material-symbols-outlined text-4xl">book_2</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
+<span class="text-white text-xs font-bold tracking-widest">VOL. IV</span>
+</div>
+</div>
+<h3 class="font-display font-bold text-gray-900 group-hover:text-primary transition-colors">Arts &amp; Resistance</h3>
+<p class="text-xs text-gray-500 mt-1">Coming 2026</p>
+</div>
+<div class="group cursor-pointer">
+<div class="relative aspect-[2/3] mb-4 bg-white shadow-md border border-gray-200 transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-xl rounded-sm overflow-hidden opacity-60">
+<div class="absolute inset-0 flex items-center justify-center bg-gray-50/50 backdrop-blur-[1px] z-20">
+<span class="bg-white px-3 py-1 rounded text-xs font-bold shadow-sm uppercase text-gray-400">Sold Out</span>
+</div>
+<div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-300">
+<span class="material-symbols-outlined text-4xl">book_2</span>
+</div>
+</div>
+<h3 class="font-display font-bold text-gray-500">The First Colony</h3>
+<p class="text-xs text-gray-400 mt-1">Legacy Edition</p>
+</div>
+</div>
+</div>
+</section>
+<footer class="bg-white border-t-2 border-accent-gold py-12">
+<div class="max-w-[1280px] mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="flex items-center gap-2">
+<img alt="Boricua Legacy Icon" class="h-6 w-auto opacity-80 filter grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAluA6IZyvyFm0-C4NVpH7oZ0MQb1-uNJqDCogNE1saLaDqKTqi_vEBGwZpUjGpwvlbBtny-JDGru8ajDKzPwKEiYtrGMczAyqAIce0w_LRcYnJiAHDcyp-rTETSh9YywBBGisJ6eQuSYs3TLKuSfHY3w3EPBVKEFIDMwl_DVyDcUR2pfH8uy1U7jRUD-lIic-q0tPne0neEfxxsAJDuyzMXS6hQvjCOPtok4Y938DEDLErVeeeQo5rk2VFCvbFWLnaUEeKQaZdpaJu"/>
+<span class="text-sm font-bold text-primary uppercase tracking-widest">Boricua Legacy</span>
+</div>
+<div class="flex gap-6">
+<a class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 text-accent-gold hover:bg-accent-gold hover:text-white transition-all" href="#">
+<span class="sr-only">Instagram</span>
+<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path clip-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.468 2.373c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" fill-rule="evenodd"></path></svg>
+</a>
+<a class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 text-accent-gold hover:bg-accent-gold hover:text-white transition-all" href="#">
+<span class="sr-only">Twitter</span>
+<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg>
+</a>
+<a class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 text-accent-gold hover:bg-accent-gold hover:text-white transition-all" href="#">
+<span class="sr-only">Facebook</span>
+<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path clip-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" fill-rule="evenodd"></path></svg>
+</a>
+</div>
+<p class="text-xs text-gray-400">© 2024 Boricua Legacy Publishing Company.</p>
+</div>
+</footer>
+</main>
+</body></html>

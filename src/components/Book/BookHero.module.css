@@ -1,0 +1,431 @@
+.section {
+    padding: 2rem 0 3rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* Breadcrumbs */
+.breadcrumbsContainer {
+    padding: 2rem 0 1rem;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    /* text-xs */
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    /* tracking-widest */
+    color: #6b7280;
+    /* gray-500 */
+    margin-bottom: 0.5rem;
+}
+
+.crumbLink {
+    transition: color 0.2s;
+}
+
+.crumbLink:hover {
+    color: var(--primary);
+}
+
+.crumbSeparator {
+    color: var(--accent-gold);
+}
+
+.crumbActive {
+    font-weight: 700;
+    color: #1f2937;
+    /* gray-800 */
+}
+
+.separator {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(to right, rgba(212, 175, 55, 0.5), transparent);
+}
+
+/* Grid Layout */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding: 2rem 0;
+}
+
+/* Left Column: Image */
+.imageColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bookWrapper {
+    perspective: 1000px;
+    margin-bottom: 2rem;
+    width: 300px;
+    /* Base width */
+}
+
+.book3dContainer {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+}
+
+.bookCover {
+    width: 100%;
+    height: 100%;
+    background-image: url('/design_assets/Book Product Page/screen.png');
+    /* Placeholder */
+    background-size: cover;
+    background-position: center;
+    border-radius: 0 4px 4px 0;
+    position: relative;
+    transform: rotateY(-10deg) rotateX(5deg);
+    transition: transform 0.5s ease;
+    background-color: #0f1923;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.imageColumn:hover .bookCover {
+    transform: rotateY(6deg);
+}
+
+.spine {
+    position: absolute;
+    left: -18px;
+    top: 2px;
+    bottom: 2px;
+    width: 18px;
+    background-color: #0f1923;
+    transform: skewY(20deg);
+    transform-origin: right;
+    border-left: 1px solid #1f2937;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.sheen {
+    position: absolute;
+    inset: 0;
+    border-radius: 0 4px 4px 0;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+}
+
+.shadow {
+    position: absolute;
+    inset: 0;
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+    pointer-events: none;
+}
+
+
+/* Thumbnails */
+.thumbnails {
+    display: flex;
+    gap: 1rem;
+}
+
+.thumb {
+    width: 4rem;
+    /* w-16 */
+    height: 6rem;
+    /* h-24 */
+    border: 1px solid #e5e7eb;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    background-color: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.thumb:hover {
+    opacity: 0.8;
+}
+
+.thumbActive {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 0 2px rgba(0, 80, 160, 0.2);
+}
+
+.thumbImage {
+    width: 100%;
+    height: 100%;
+    background-image: url('/design_assets/Book Product Page/screen.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.thumb span {
+    color: #9ca3af;
+    font-size: 1.5rem;
+}
+
+
+/* Right Column: Text */
+.textColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 1rem;
+}
+
+.stockStatus {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.stockDot {
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: var(--accent-gold);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.stockText {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.title {
+    font-family: var(--font-noto-serif), serif;
+    font-size: 2.25rem;
+    /* text-4xl */
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-style: italic;
+    color: var(--primary);
+}
+
+.author {
+    font-size: 1.125rem;
+    color: #6b7280;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+
+.pullQuote {
+    font-size: 1.25rem;
+    color: #374151;
+    /* gray-700 */
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    padding-left: 1.5rem;
+    border-left: 4px solid rgba(212, 175, 55, 0.3);
+    font-style: italic;
+}
+
+/* Format Selection */
+.formatSelection {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.radioLabel {
+    position: relative;
+    cursor: pointer;
+}
+
+.radioInput {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.formatCard {
+    padding: 0.75rem 1.5rem;
+    border: 1px solid #d1d5db;
+    /* gray-300 */
+    border-radius: 0.25rem;
+    background-color: white;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.radioLabel:hover .formatCard {
+    border-color: var(--accent-gold);
+}
+
+.radioInput:checked+.formatCard {
+    background-color: rgba(0, 80, 160, 0.05);
+    /* primary/5 */
+    border: 2px solid var(--accent-gold);
+    padding: calc(0.75rem - 1px) calc(1.5rem - 1px);
+    /* Adjustment for border width difference */
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+}
+
+.formatName {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #111827;
+    /* gray-900 */
+}
+
+.radioInput:checked+.formatCard .formatName {
+    /* Styles for checked state if needed */
+}
+
+.radioInput:not(:checked)+.formatCard .formatName {
+    color: #6b7280;
+    /* gray-500 */
+}
+
+.formatPrice {
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin-top: 0.25rem;
+}
+
+.bestSellerBadge {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    background-color: var(--accent-gold);
+    color: white;
+    font-size: 0.625rem;
+    /* tiny */
+    font-weight: 700;
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.buyBtn {
+    flex: 1;
+    height: 3.5rem;
+    background-color: var(--accent-red);
+    color: white;
+    font-size: 1.125rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-noto-serif), serif;
+}
+
+.buyBtn:hover {
+    background-color: #c9151c;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.updateBtn {
+    flex: 1;
+    height: 3.5rem;
+    background-color: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    font-size: 1.125rem;
+    font-weight: 700;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: var(--font-noto-serif), serif;
+}
+
+.updateBtn:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
+.bulkLink {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    transition: color 0.2s;
+}
+
+.bulkLink:hover {
+    color: #b88a44;
+}
+
+.bulkLink span {
+    font-size: 1rem;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: 5fr 7fr;
+        /* 5/12 and 7/12 roughly */
+        gap: 4rem;
+    }
+
+    .bookWrapper {
+        width: 360px;
+    }
+
+    .title {
+        font-size: 3rem;
+        /* text-5xl */
+    }
+
+    .actions {
+        flex-direction: row;
+    }
+}
+
+@media (min-width: 1024px) {
+    .title {
+        font-size: 3.75rem;
+        /* text-6xl */
+    }
+}

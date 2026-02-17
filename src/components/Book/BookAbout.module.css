@@ -1,0 +1,199 @@
+.section {
+    padding: 5rem 0;
+    background-color: var(--paper);
+    position: relative;
+    overflow: hidden;
+}
+
+.texture {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0.1;
+    pointer-events: none;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 10;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+}
+
+/* Left Column */
+.heading {
+    font-family: var(--font-noto-serif), serif;
+    font-size: 1.875rem;
+    /* text-3xl */
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    border-bottom: 2px solid var(--accent-gold);
+    padding-bottom: 0.5rem;
+}
+
+.prose {
+    color: #4b5563;
+    /* gray-600 */
+    font-size: 1.125rem;
+    /* text-lg */
+    line-height: 1.625;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.highlight {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* Right Column */
+.previewColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.previewHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 0.5rem;
+}
+
+.previewTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.pageCount {
+    font-family: monospace;
+    font-size: 0.875rem;
+    color: var(--accent-gold);
+}
+
+.previewCard {
+    position: relative;
+    background-color: white;
+    padding: 1rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e5e7eb;
+    border-radius: 0.125rem;
+}
+
+.cardHeaderGold {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 16.666%;
+    /* 1/6 */
+    background-color: var(--accent-gold);
+    z-index: 20;
+}
+
+.cardHeaderGray {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background-color: #f3f4f6;
+    z-index: 10;
+}
+
+.previewImageWrapper {
+    aspect-ratio: 16 / 9;
+    background-color: #f3f4f6;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.previewImage {
+    width: 100%;
+    height: 100%;
+    background-image: url('/design_assets/Book Product Page/screen.png');
+    /* Placeholder */
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.7s;
+}
+
+.previewImageWrapper:hover .previewImage {
+    transform: scale(1.05);
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.previewImageWrapper:hover .overlay {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.zoomBtn {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 1rem;
+    border-radius: 9999px;
+    opacity: 0;
+    transform: translateY(1rem);
+    transition: all 0.3s;
+    color: var(--primary);
+    display: flex;
+}
+
+.previewImageWrapper:hover .zoomBtn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.previewActions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+}
+
+.chapterBtn {
+    color: var(--accent-red);
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    border-bottom: 2px solid var(--accent-red);
+    padding: 0.25rem 0.5rem;
+    transition: background-color 0.2s;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    cursor: pointer;
+}
+
+.chapterBtn:hover {
+    background-color: rgba(237, 28, 36, 0.05);
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: 5fr 7fr;
+        gap: 4rem;
+    }
+}

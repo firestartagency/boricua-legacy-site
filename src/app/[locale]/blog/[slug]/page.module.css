@@ -1,0 +1,123 @@
+.main {
+    min-height: 100vh;
+    background: white;
+}
+
+.loading,
+.notFound {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    gap: 1rem;
+}
+
+.article {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 6rem 2rem 4rem;
+}
+
+.backLink {
+    display: inline-block;
+    color: var(--accent-gold, #d4af37);
+    font-weight: 600;
+    text-decoration: none;
+    margin-bottom: 2rem;
+    transition: color 0.3s ease;
+}
+
+.backLink:hover {
+    color: #b8962e;
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+.meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+}
+
+.category {
+    background: var(--accent-gold, #d4af37);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.date,
+.author {
+    color: #9ca3af;
+}
+
+.title {
+    font-family: var(--font-noto-serif), serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #111;
+    line-height: 1.2;
+}
+
+.featuredImage {
+    margin-bottom: 2rem;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.featuredImage img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.content {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #333;
+}
+
+.h1 {
+    font-family: var(--font-noto-serif), serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111;
+    margin: 2rem 0 1rem;
+}
+
+.h2 {
+    font-family: var(--font-noto-serif), serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111;
+    margin: 2rem 0 1rem;
+}
+
+.h3 {
+    font-family: var(--font-noto-serif), serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111;
+    margin: 1.5rem 0 0.75rem;
+}
+
+.paragraph {
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .article {
+        padding: 4rem 1rem 2rem;
+    }
+}

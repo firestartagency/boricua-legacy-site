@@ -1,0 +1,157 @@
+{
+    "HomePage": {
+        "title": "Boricua Legacy",
+        "header": {
+            "links": {
+                "collection": "Colección",
+                "author": "Autora",
+                "mission": "Misión"
+            },
+            "waitlist": "Unirse a la Lista"
+        },
+        "collections": {
+            "title": "Las Colecciones",
+            "subtitle": "Paquetes seleccionados de historia, cultura y mercancía. Desplázate para explorar los sets completos.",
+            "card": {
+                "label": "Colección",
+                "included": "Incluido en el set:",
+                "viewBtn": "Ver Colección",
+                "merch": "Mercancía",
+                "book": "Libro"
+            },
+            "items": {
+                "c1": {
+                    "title": "La Colección Legado",
+                    "description": "Sumérgete en las historias que formaron una nación, acompañadas de herramientas para documentar tu propio viaje."
+                },
+                "c2": {
+                    "title": "La Colección Diáspora",
+                    "description": "Voces desde el otro lado del mar, llevando el espíritu de la isla a cada rincón del mundo."
+                },
+                "c3": {
+                    "title": "La Colección Futuro",
+                    "description": "Maravillas tecnológicas y tradiciones antiguas chocan en este set con visión de futuro."
+                }
+            },
+            "books": {
+                "1": "Legado Boricua: Las Mujeres que Hicieron Historia",
+                "2": "Ecos de San Juan",
+                "3": "Coquí Digital"
+            },
+            "resources": {
+                "r1": "Diario de Legado",
+                "r2": "Marcador Dorado",
+                "r3": "Mapa del Viejo San Juan",
+                "r4": "Paquete de Pegatinas Coquí",
+                "r5": "Llave de Acceso Digital",
+                "r6": "Marcador de Neón"
+            },
+            "merch": {
+                "m1": "Bolsa de Legado",
+                "m2": "Taza de Adoquín",
+                "m3": "Camiseta Glitch"
+            }
+        },
+        "hero": {
+            "slides": {
+                "1": {
+                    "headline_1": "Su Historia.",
+                    "headline_2": "Su Fuerza.",
+                    "headline_3": "Su Legado.",
+                    "subtext": "Una colección editorial premium que documenta las reinas, guerreras y pioneras olvidadas de la historia puertorriqueña.",
+                    "spine": "LEGADO BORICUA"
+                },
+                "2": {
+                    "headline_1": "Voces de",
+                    "headline_2": "La Diáspora.",
+                    "headline_3": "Volumen II.",
+                    "subtext": "Explorando los viajes, luchas y triunfos de los puertorriqueños que dejan huella en todo el mundo.",
+                    "spine": "VOCES DE DIÁSPORA"
+                },
+                "3": {
+                    "headline_1": "Leyendas de",
+                    "headline_2": "Borikén.",
+                    "headline_3": "Volumen III.",
+                    "subtext": "La mitología y el folclore cobran vida en esta exploración visual de las historias más antiguas de nuestra isla.",
+                    "spine": "LEYENDAS"
+                }
+            },
+            "buttons": {
+                "primary": "Ordenar Ahora",
+                "secondary": "Leer un Fragmento"
+            }
+        },
+        "audience": {
+            "title": "Para Quién Publicamos",
+            "learnMore": "Leer Más",
+            "cards": {
+                "families": {
+                    "title": "Familias",
+                    "text": "Reconectando generaciones a través de historias compartidas y herencia."
+                },
+                "educators": {
+                    "title": "Educadores",
+                    "text": "Recursos listos para enseñar historia auténtica en el currículo."
+                },
+                "libraries": {
+                    "title": "Bibliotecas",
+                    "text": "Adiciones esenciales para colecciones diversas e inclusivas."
+                },
+                "readers": {
+                    "title": "Lectores",
+                    "text": "Para cualquiera que busque profundidad, belleza y riqueza cultural."
+                }
+            }
+        },
+        "author": {
+            "eyebrow": "Conoce a la Autora",
+            "title": "Un Viaje de las Finanzas al Legado",
+            "bio_p1": "Nacida en Ponce, Puerto Rico, Jacqueline Jiménez pasó más de dos décadas en el mundo corporativo antes de responder a su propia \"llamada a la aventura.\" En 2019, hizo la transición al emprendimiento como Coach de Vida certificada, cumpliendo una misión de ayudar a otros a desbloquear su potencial y definir sus propios legados.",
+            "bio_p2_pre": "Su libro debut, ",
+            "bio_p2_link": "Boricua Legacy",
+            "bio_p2_post": ", aplica el marco del Viaje del Héroe a las vidas de doce mujeres puertorriqueñas extraordinarias. Fusionando el autodescubrimiento con la identidad cultural, Jacqueline escribe para celebrar el espíritu inquebrantable de la isla, demostrando que nuestras raíces son nuestro poder y nuestra herencia es nuestra corona.",
+            "badge_label": "Autora"
+        },
+        "mission": {
+            "quote": "Si no documentamos nuestra propia historia, será olvidada.",
+            "label": "La Misión",
+            "pillars": {
+                "preservation": {
+                    "title": "Preservación",
+                    "text": "Salvaguardando nuestras historias orales y hallazgos de archivo para las futuras generaciones antes de que se desvanezcan."
+                },
+                "education": {
+                    "title": "Educación",
+                    "text": "Proporcionando recursos accesibles y rigurosos para aulas, bibliotecas y hogares para fomentar el aprendizaje."
+                },
+                "inspiration": {
+                    "title": "Inspiración",
+                    "text": "Despertando orgullo a través de narrativas poderosas que reflejan la fuerza y belleza de nuestra gente."
+                }
+            }
+        }
+    },
+    "Blog": {
+        "title": "Blog",
+        "subtitle": "Historias, conocimientos y noticias de la comunidad Boricua Legacy",
+        "empty": "Aún no hay artículos. ¡Vuelve pronto!",
+        "readMore": "Leer Más",
+        "notFound": "Artículo no encontrado",
+        "backToBlog": "Volver al Blog"
+    },
+    "Press": {
+        "title": "Prensa",
+        "subtitle": "Cobertura mediática y recursos de prensa para Boricua Legacy",
+        "pressKit": {
+            "title": "Kit de Prensa",
+            "description": "Descarga nuestro kit de medios con logos, fotos del autor e información de prensa.",
+            "download": "Descargar Kit de Prensa",
+            "contact": "Consultas de Prensa"
+        },
+        "coverage": {
+            "title": "Cobertura Mediática",
+            "empty": "Aún no hay cobertura de prensa.",
+            "readArticle": "Leer Artículo"
+        }
+    }
+}

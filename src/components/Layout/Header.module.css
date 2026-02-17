@@ -1,0 +1,355 @@
+/* ============================================
+   Header — Base (mobile-first)
+   ============================================ */
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    width: 100%;
+    background-color: var(--primary);
+    border-bottom: 2px solid var(--accent-gold);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: background-color 0.3s ease,
+        backdrop-filter 0.3s ease;
+}
+
+.scrolled {
+    background-color: rgba(0, 80, 160, 0.9);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.8);
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* ============================================
+   Logo
+   ============================================ */
+
+.logoWrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logoLink {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    text-decoration: none;
+}
+
+.logoImage {
+    object-fit: contain;
+    display: block;
+}
+
+.logoText {
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: var(--font-noto-serif), serif;
+}
+
+/* ============================================
+   Desktop Nav — hidden on mobile
+   ============================================ */
+
+.nav {
+    display: none;
+}
+
+.navLink {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.125rem;
+    font-weight: 500;
+    transition: color 0.15s ease;
+    font-family: var(--font-noto-serif), serif;
+    text-decoration: none;
+}
+
+.navLink:hover {
+    color: var(--accent-gold);
+}
+
+.activeLink {
+    color: var(--accent-gold);
+    border-bottom: 2px solid var(--accent-gold);
+    padding-bottom: 2px;
+}
+
+/* ============================================
+   Desktop Actions — hidden on mobile
+   ============================================ */
+
+.actions {
+    display: none;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.langToggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-family: var(--font-noto-serif), serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.langBtn {
+    background: none;
+    border: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.langBtn:hover {
+    color: var(--accent-gold);
+}
+
+.activeLang {
+    color: var(--accent-gold);
+    font-weight: 700;
+    border-bottom: 1px solid var(--accent-gold);
+}
+
+.langDivider {
+    opacity: 0.5;
+}
+
+.waitlistBtn {
+    background-color: var(--accent-red);
+    color: #ffffff;
+    font-size: 0.875rem;
+    font-weight: 700;
+    padding: 0.625rem 1.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid transparent;
+    transition: all 0.3s;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    font-family: var(--font-noto-serif), serif;
+}
+
+.waitlistBtn:hover {
+    background-color: #c9151c;
+    border-color: var(--accent-gold);
+}
+
+/* ============================================
+   Hamburger Button (mobile only)
+   ============================================ */
+
+.mobileMenuBtn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    z-index: 60;
+}
+
+.hamburgerLine {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform-origin: center;
+}
+
+/* Animate to X when menu is open */
+.menuOpen .hamburgerLine:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.menuOpen .hamburgerLine:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.menuOpen .hamburgerLine:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ============================================
+   Mobile Overlay (backdrop)
+   ============================================ */
+
+.mobileOverlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.overlayVisible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* ============================================
+   Mobile Navigation Panel
+   ============================================ */
+
+.mobileNav {
+    position: fixed;
+    top: 4rem;
+    /* below the header */
+    left: 0;
+    right: 0;
+    z-index: 45;
+    background-color: var(--primary);
+    border-bottom: 2px solid var(--accent-gold);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 2rem 2rem;
+    gap: 0.25rem;
+    transform: translateY(-110%);
+    opacity: 0;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.3s ease;
+    pointer-events: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.mobileNavOpen {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.mobileNavLink {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.25rem;
+    font-weight: 500;
+    font-family: var(--font-noto-serif), serif;
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    width: 100%;
+    text-align: center;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.mobileNavLink:hover {
+    color: var(--accent-gold);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.activeMobileLink {
+    color: var(--accent-gold);
+    background-color: rgba(212, 175, 55, 0.1);
+}
+
+.mobileDivider {
+    width: 60%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.15);
+    margin: 0.75rem 0;
+}
+
+.mobileLangToggle {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.mobileLangBtn {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.9);
+    font-family: var(--font-noto-serif), serif;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.5rem 1.25rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mobileLangBtn:hover {
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+}
+
+.mobileLangBtn.activeLang {
+    color: var(--accent-gold);
+    border-color: var(--accent-gold);
+    font-weight: 700;
+}
+
+.mobileWaitlistBtn {
+    width: 100%;
+    max-width: 280px;
+    background-color: var(--accent-red);
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.875rem 1.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid transparent;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    font-family: var(--font-noto-serif), serif;
+    margin-top: 0.5rem;
+}
+
+.mobileWaitlistBtn:hover {
+    background-color: #c9151c;
+    border-color: var(--accent-gold);
+}
+
+/* ============================================
+   Desktop Breakpoint — 768px
+   ============================================ */
+
+@media (min-width: 768px) {
+    .nav {
+        display: flex;
+        gap: 2rem;
+    }
+
+    .actions {
+        display: flex;
+    }
+
+    .mobileMenuBtn {
+        display: none;
+    }
+
+    .mobileNav {
+        display: none;
+    }
+
+    .mobileOverlay {
+        display: none;
+    }
+}

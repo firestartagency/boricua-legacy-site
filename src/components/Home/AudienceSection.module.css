@@ -1,0 +1,147 @@
+.section {
+    padding: 6rem 0;
+    background-color: var(--paper);
+    position: relative;
+}
+
+/* Optional background pattern similar to reference */
+.section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0.1;
+    pointer-events: none;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 10;
+    text-align: center;
+}
+
+.header {
+    margin-bottom: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.eyebrow {
+    color: var(--accent-gold);
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+
+.title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+    font-family: var(--font-noto-serif), serif;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.card {
+    background-color: white;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    /* gold/30 */
+    padding: 2rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    transition: all 0.3s;
+}
+
+.card:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.iconWrapper {
+    color: var(--accent-gold);
+    margin-bottom: 1.5rem;
+}
+
+/* Note: Material Symbols need to be loaded in layout/globally or we use SVG replacements. 
+   Assuming globally loaded or using text fallback if not present */
+.iconWrapper span {
+    font-size: 2.25rem;
+}
+
+.cardTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.75rem;
+    font-family: var(--font-noto-serif), serif;
+}
+
+.cardText {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+/* Button is hidden by default: 0 height, 0 opacity, hidden overflow */
+.learnMoreBtn {
+    margin-top: 0;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    background: transparent;
+    color: var(--primary);
+    border: none;
+    border-bottom: 2px solid var(--primary);
+    padding: 0.25rem 0;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    font-family: var(--font-noto-serif), serif;
+}
+
+.learnMoreBtn:hover {
+    color: var(--accent-red);
+    border-color: var(--accent-red);
+}
+
+/* On hover, expand height and fade in opacity */
+.card:hover .learnMoreBtn {
+    margin-top: 1.5rem;
+    max-height: 50px;
+    opacity: 1;
+}
+
+
+/* Responsive */
+@media (min-width: 768px) {
+    .title {
+        font-size: 3rem;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
