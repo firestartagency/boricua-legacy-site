@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import styles from './CollectionScrollContainer.module.css';
 import CollectionCard from './CollectionCard';
 import { createClientComponentClient } from '@/lib/supabase';
@@ -15,6 +15,15 @@ interface CollectionWithRelations {
     theme_color: string;
     display_order: number;
     price: number | null;
+    original_price: number | null;
+    sale_price: number | null;
+    is_on_sale: boolean;
+    primary_btn_text: string;
+    primary_btn_text_es: string | null;
+    primary_btn_link: string | null;
+    secondary_btn_text: string | null;
+    secondary_btn_text_es: string | null;
+    secondary_btn_link: string | null;
     is_active: boolean;
     books: Array<{
         id: string;
@@ -23,25 +32,20 @@ interface CollectionWithRelations {
         cover_image_url: string | null;
         price: number | null;
     }>;
-    collection_resources: Array<{
+    collection_items: Array<{
         id: string;
         name: string;
         name_es: string | null;
         type: string;
+        description: string | null;
+        description_es: string | null;
         image_url: string | null;
-    }>;
-    collection_merch: Array<{
-        id: string;
-        name: string;
-        name_es: string | null;
         price: number | null;
-        image_url: string | null;
-    }>;
-    collection_images: Array<{
-        id: string;
-        image_url: string;
-        alt_text: string | null;
+        purchase_url: string | null;
+        is_included: boolean;
+        grid_size: string;
         display_order: number;
+        is_active: boolean;
     }>;
 }
 
@@ -61,9 +65,7 @@ const CollectionScrollContainer = () => {
                 .select(`
                     *,
                     books(*),
-                    collection_resources(*),
-                    collection_merch(*),
-                    collection_images(*)
+                    collection_items(*)
                 `)
                 .eq('is_active', true)
                 .order('display_order', { ascending: true });
@@ -77,7 +79,7 @@ const CollectionScrollContainer = () => {
         fetchCollections();
     }, [supabase]);
 
-    // Handle scroll-based index change manually without useScroll during SSR
+    // Handle scroll-based index change
     useEffect(() => {
         if (isLoading || collections.length === 0 || !containerRef.current) return;
 
@@ -100,7 +102,7 @@ const CollectionScrollContainer = () => {
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
-        handleScroll(); // Initial call
+        handleScroll();
 
         return () => window.removeEventListener('scroll', handleScroll);
     }, [isLoading, collections.length]);

@@ -1,184 +1,224 @@
 'use client';
 
 import styles from './CollectionCard.module.css';
-import { useTranslations, useLocale } from 'next-intl';
+import Link from 'next/link';
+import { useLocale } from 'next-intl';
 
-interface CollectionWithRelations {
+interface CollectionItemType {
     id: string;
-    title: string;
-    title_es: string | null;
+    name: string;
+    name_es: string | null;
+    type: string;
     description: string | null;
     description_es: string | null;
-    theme_color: string;
-    display_order: number;
+    image_url: string | null;
     price: number | null;
+    purchase_url: string | null;
+    is_included: boolean;
+    grid_size: string;
+    display_order: number;
     is_active: boolean;
-    books: Array<{
+}
+
+interface CollectionCardProps {
+    collection: {
         id: string;
         title: string;
         title_es: string | null;
-        cover_image_url: string | null;
-        price: number | null;
-    }>;
-    collection_resources: Array<{
-        id: string;
-        name: string;
-        name_es: string | null;
-        type: string;
-        image_url: string | null;
-    }>;
-    collection_merch: Array<{
-        id: string;
-        name: string;
-        name_es: string | null;
-        price: number | null;
-        image_url: string | null;
-    }>;
-    collection_images: Array<{
-        id: string;
-        image_url: string;
-        alt_text: string | null;
+        description: string | null;
+        description_es: string | null;
+        theme_color: string;
         display_order: number;
-    }>;
+        price: number | null;
+        original_price: number | null;
+        sale_price: number | null;
+        is_on_sale: boolean;
+        primary_btn_text: string;
+        primary_btn_text_es: string | null;
+        primary_btn_link: string | null;
+        secondary_btn_text: string | null;
+        secondary_btn_text_es: string | null;
+        secondary_btn_link: string | null;
+        books: Array<{
+            id: string;
+            title: string;
+            title_es: string | null;
+            cover_image_url: string | null;
+        }>;
+        collection_items: CollectionItemType[];
+    };
 }
 
-interface Props {
-    collection: CollectionWithRelations;
-}
-
-const CollectionCard = ({ collection }: Props) => {
-    const t = useTranslations('HomePage.collections');
+const CollectionCard = ({ collection }: CollectionCardProps) => {
     const locale = useLocale();
-    const isSpanish = locale === 'es';
+    const isEs = locale === 'es';
 
-    // Safety check
-    if (!collection) return null;
+    const title = (isEs && collection.title_es) || collection.title;
+    const description = (isEs && collection.description_es) || collection.description;
 
-    // Get localized text
-    const title = isSpanish && collection.title_es ? collection.title_es : collection.title;
-    const description = isSpanish && collection.description_es ? collection.description_es : collection.description;
+    // Build grid items: book cover first, then active items with images that aren't hidden
+    const gridItems: Array<{ id: string; name: string; imageUrl: string; type: string; isFeatured: boolean }> = [];
 
-    // Get the first book for the collection
-    const mainBook = collection.books?.[0];
-    const bookTitle = mainBook ? (isSpanish && mainBook.title_es ? mainBook.title_es : mainBook.title) : null;
+    // Add book cover as first featured item
+    const book = collection.books?.[0];
+    if (book?.cover_image_url) {
+        gridItems.push({
+            id: `book-${book.id}`,
+            name: (isEs && book.title_es) || book.title,
+            imageUrl: book.cover_image_url,
+            type: 'book',
+            isFeatured: true,
+        });
+    }
 
-    // Aggregate all displayable items for the image grid
-    const gridItems = [
-        // Main book cover
-        mainBook?.cover_image_url ? { id: 'book', type: 'book', image: mainBook.cover_image_url, label: t('card.book') } : null,
-        // Collection images
-        ...(collection.collection_images || []).map(img => ({
-            id: img.id,
-            type: 'collection-image',
-            image: img.image_url,
-            label: img.alt_text || 'Collection image'
-        })),
-        // Resources with images
-        ...(collection.collection_resources || []).map(r => ({
-            id: r.id,
-            type: r.type,
-            image: r.image_url,
-            label: isSpanish && r.name_es ? r.name_es : r.name
-        })),
-        // Merch with images
-        ...(collection.collection_merch || []).map(m => ({
-            id: m.id,
-            type: 'merch',
-            image: m.image_url,
-            label: isSpanish && m.name_es ? m.name_es : m.name
-        }))
-    ].filter(item => item && item.image);
+    // Add collection items (active, with images, not hidden)
+    const activeItems = (collection.collection_items || [])
+        .filter(item => item.is_active && item.image_url && item.grid_size !== 'hidden')
+        .sort((a, b) => a.display_order - b.display_order);
 
-    // Take top 4 items to fit grid nicely
+    activeItems.forEach(item => {
+        gridItems.push({
+            id: item.id,
+            name: (isEs && item.name_es) || item.name,
+            imageUrl: item.image_url!,
+            type: item.type,
+            isFeatured: item.grid_size === 'featured',
+        });
+    });
+
+    // Determine grid class based on visible item count
+    const visibleCount = gridItems.length;
+    const extraCount = visibleCount > 4 ? visibleCount - 4 : 0;
     const displayItems = gridItems.slice(0, 4);
 
-    // CSS variables for main container theme
-    const cardStyle = {
-        '--theme-color-bg': `${collection.theme_color}15`,
-    } as React.CSSProperties;
+    const getGridClass = () => {
+        if (visibleCount <= 0) return '';
+        if (visibleCount === 1) return styles.gridCount1;
+        if (visibleCount === 2) return styles.gridCount2;
+        if (visibleCount === 3) return styles.gridCount3;
+        return styles.gridCount4;
+    };
 
-    const firstMerch = collection.collection_merch?.[0];
+    // Build included items list
+    const includedItems = (collection.collection_items || [])
+        .filter(item => item.is_included && item.is_active)
+        .sort((a, b) => a.display_order - b.display_order);
+
+    // Pricing
+    const displayPrice = collection.is_on_sale && collection.sale_price
+        ? collection.sale_price
+        : collection.price;
+
+    // Button text (localized)
+    const primaryText = (isEs && collection.primary_btn_text_es) || collection.primary_btn_text || 'View Collection';
+    const secondaryText = (isEs && collection.secondary_btn_text_es) || collection.secondary_btn_text;
 
     return (
-        <div className={styles.card} style={cardStyle}>
+        <article className={styles.card} style={{ '--theme-color-bg': collection.theme_color + '20' } as React.CSSProperties}>
+            {/* Visual Side */}
             <div className={styles.visualSide}>
-                <div className={styles.gridContainer}>
-                    {displayItems.map((item, idx) => {
-                        if (!item) return null;
-                        const isFeatured = item.type === 'book';
-                        return (
+                {visibleCount > 0 ? (
+                    <div className={`${styles.gridContainer} ${getGridClass()}`}>
+                        {displayItems.map((item, idx) => (
                             <div
-                                key={item.id || idx}
-                                className={`${styles.gridItem} ${isFeatured ? styles.itemFeatured : ''}`}
+                                key={item.id}
+                                className={`${styles.gridItem} ${item.isFeatured ? styles.itemFeatured : ''}`}
                             >
-                                <div
+                                <img
+                                    src={item.imageUrl}
+                                    alt={item.name}
                                     className={styles.gridImage}
-                                    style={{ backgroundImage: `url('${item.image}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-                                    role="img"
-                                    aria-label={item.label}
+                                    loading="lazy"
                                 />
-                            </div>
-                        );
-                    })}
-                </div>
-            </div>
-
-            <div className={styles.infoSide}>
-                <span className={styles.collectionLabel}>{t('card.label')} 0{collection.display_order + 1}</span>
-                <h3 className={styles.title}>{title}</h3>
-                <p className={styles.description}>{description}</p>
-
-                {/* Collection Price */}
-                {collection.price && (
-                    <div className={styles.priceSection}>
-                        <span className={styles.priceLabel}>{t('card.price') || 'Collection Price'}</span>
-                        <span className={styles.priceValue}>${collection.price.toFixed(2)}</span>
-                    </div>
-                )}
-
-                <div className={styles.includesList}>
-                    <div className={styles.includesHeader}>{t('card.included')}</div>
-                    <div className={styles.includesGrid}>
-                        {mainBook && (
-                            <div className={styles.includeItem}>
-                                <span className={styles.checkIcon}>✓</span>
-                                {bookTitle} ({t('card.book')})
-                            </div>
-                        )}
-                        {(collection.collection_resources || []).map(res => (
-                            <div key={res.id} className={styles.includeItem}>
-                                <span className={styles.checkIcon}>✓</span>
-                                {isSpanish && res.name_es ? res.name_es : res.name}
+                                <span className={styles.gridLabel}>{item.name}</span>
+                                {/* "+N more" overlay on last item */}
+                                {idx === displayItems.length - 1 && extraCount > 0 && (
+                                    <div className={styles.moreOverlay}>
+                                        +{extraCount} more
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>
-                </div>
+                ) : (
+                    <div className={styles.emptyGrid}>
+                        <span>No images yet</span>
+                    </div>
+                )}
+            </div>
 
-                {firstMerch && (
-                    <div className={styles.merchSection}>
-                        <div className={styles.merchPreview}>
-                            {firstMerch.image_url && (
-                                <div
-                                    className={styles.merchThumb}
-                                    style={{ backgroundImage: `url('${firstMerch.image_url}')` }}
-                                ></div>
-                            )}
-                            <div className={styles.merchInfo}>
-                                <span className={styles.merchName}>
-                                    {isSpanish && firstMerch.name_es ? firstMerch.name_es : firstMerch.name}
+            {/* Info Side */}
+            <div className={styles.infoSide}>
+                <span className={styles.collectionLabel}>
+                    Collection {String(collection.display_order + 1).padStart(2, '0')}
+                </span>
+
+                <h3 className={styles.title}>{title}</h3>
+
+                {description && (
+                    <p className={styles.description}>{description}</p>
+                )}
+
+                {/* Compact Pricing */}
+                {displayPrice != null && displayPrice > 0 && (
+                    <div className={styles.priceRow}>
+                        {collection.is_on_sale && collection.original_price ? (
+                            <>
+                                <span className={styles.originalPrice}>
+                                    ${collection.original_price.toFixed(2)}
                                 </span>
-                                {firstMerch.price && (
-                                    <span className={styles.merchPrice}>+${firstMerch.price}</span>
-                                )}
-                            </div>
+                                <span className={styles.salePrice}>
+                                    ${displayPrice.toFixed(2)}
+                                </span>
+                                <span className={styles.saleBadge}>SALE</span>
+                            </>
+                        ) : (
+                            <span className={styles.price}>
+                                ${displayPrice.toFixed(2)}
+                            </span>
+                        )}
+                    </div>
+                )}
+
+                {/* Included items */}
+                {includedItems.length > 0 && (
+                    <div className={styles.includesList}>
+                        <span className={styles.includesHeader}>What&apos;s Included:</span>
+                        <div className={styles.includesGrid}>
+                            {includedItems.map(item => {
+                                const itemName = (isEs && item.name_es) || item.name;
+                                return (
+                                    <div key={item.id} className={styles.includeItem}>
+                                        <span className={styles.checkIcon}>✓</span>
+                                        <span>{itemName}</span>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 )}
 
-                {/* Always show View Collection button */}
-                <button className={styles.ctaButton}>{t('card.viewBtn')}</button>
+                {/* CTA Buttons */}
+                <div className={styles.buttonGroup}>
+                    <Link
+                        href={collection.primary_btn_link || `/${locale}/collections/${collection.id}`}
+                        className={styles.ctaButton}
+                    >
+                        {primaryText}
+                    </Link>
+
+                    {secondaryText && (
+                        collection.secondary_btn_link ? (
+                            <Link href={collection.secondary_btn_link} className={styles.secondaryButton}>
+                                {secondaryText}
+                            </Link>
+                        ) : (
+                            <button className={styles.secondaryButton}>{secondaryText}</button>
+                        )
+                    )}
+                </div>
             </div>
-        </div>
+        </article>
     );
 };
 

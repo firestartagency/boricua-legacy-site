@@ -35,6 +35,7 @@ export default function HeroSlideFormPage() {
         button_secondary_text_es: 'Leer un Extracto',
         button_secondary_link: '',
         display_order: 0,
+        show_spine: false,
         is_active: true
     });
 
@@ -83,6 +84,7 @@ export default function HeroSlideFormPage() {
                 button_secondary_text_es: slide.button_secondary_text_es || 'Leer un Extracto',
                 button_secondary_link: slide.button_secondary_link || '',
                 display_order: slide.display_order || 0,
+                show_spine: slide.show_spine || false,
                 is_active: slide.is_active
             });
         }
@@ -341,6 +343,17 @@ export default function HeroSlideFormPage() {
                                 onChange={handleChange}
                                 min={0}
                             />
+                        </div>
+                        <div className={styles.checkboxField}>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    name="show_spine"
+                                    checked={formData.show_spine}
+                                    onChange={handleChange}
+                                />
+                                Show 3D Spine Effect (for flat cover images — leave off for transparent renders)
+                            </label>
                         </div>
                         <div className={styles.checkboxField}>
                             <label>

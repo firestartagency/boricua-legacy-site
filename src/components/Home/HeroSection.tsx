@@ -3,53 +3,70 @@
 import Link from 'next/link';
 import styles from './HeroSection.module.css';
 import { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
+import { createClientComponentClient } from '@/lib/supabase';
+import type { HeroSlide } from '@/types/database';
+
+interface HeroSlideWithBook extends HeroSlide {
+    books?: { title: string; slug: string; cover_image_url: string | null } | null;
+}
 
 const HeroSection = () => {
-    const t = useTranslations('HomePage.hero');
+    const locale = useLocale();
+    const isEs = locale === 'es';
+    const supabase = createClientComponentClient();
+
+    const [slides, setSlides] = useState<HeroSlideWithBook[]>([]);
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isExiting, setIsExiting] = useState(false);
 
-    const heroSlides = [
-        {
-            id: 1,
-            headline: <>{t('slides.1.headline_1')}<br />{t('slides.1.headline_2')}<br /><span className={styles.highlight}>{t('slides.1.headline_3')}</span></>,
-            subtext: t('slides.1.subtext'),
-            coverImage: "/design_assets/Boricua Legacy Homepage PNG Image/screen.png",
-            spineText: t('slides.1.spine'),
-            spineColor: "var(--accent-gold)"
-        },
-        {
-            id: 2,
-            headline: <>{t('slides.2.headline_1')}<br />{t('slides.2.headline_2')}<br /><span className={styles.highlight}>{t('slides.2.headline_3')}</span></>,
-            subtext: t('slides.2.subtext'),
-            coverImage: "/design_assets/Book Product Page/screen.png",
-            spineText: t('slides.2.spine'),
-            spineColor: "#E94E77" // Example distinct color
-        },
-        {
-            id: 3,
-            headline: <>{t('slides.3.headline_1')}<br />{t('slides.3.headline_2')}<br /><span className={styles.highlight}>{t('slides.3.headline_3')}</span></>,
-            subtext: t('slides.3.subtext'),
-            coverImage: "/design_assets/Book Product Page/screen.png",
-            spineText: t('slides.3.spine'),
-            spineColor: "#4A90E2" // Example distinct color
-        }
-    ];
+    useEffect(() => {
+        const fetchSlides = async () => {
+            const { data } = await supabase
+                .from('hero_slides')
+                .select('*, books(title, slug, cover_image_url)')
+                .eq('is_active', true)
+                .order('display_order', { ascending: true });
+
+            if (data && data.length > 0) {
+                setSlides(data as unknown as HeroSlideWithBook[]);
+            }
+        };
+        fetchSlides();
+    }, []);
 
     useEffect(() => {
+        if (slides.length <= 1) return;
+
         const interval = setInterval(() => {
             setIsExiting(true);
             setTimeout(() => {
-                setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-                setIsExiting(false); // Reset to bring content back into view
-            }, 3000); // 3s transition to match CSS
-        }, 10000); // Change every 10 seconds
+                setCurrentSlide((prev) => (prev + 1) % slides.length);
+                setIsExiting(false);
+            }, 3000);
+        }, 10000);
 
         return () => clearInterval(interval);
-    }, [heroSlides.length]);
+    }, [slides.length]);
 
-    const slide = heroSlides[currentSlide];
+    if (slides.length === 0) return null;
+
+    const slide = slides[currentSlide];
+
+    // Use localized text or fall back to English
+    const headline1 = (isEs && slide.headline_1_es) || slide.headline_1 || '';
+    const headline2 = (isEs && slide.headline_2_es) || slide.headline_2 || '';
+    const headline3 = (isEs && slide.headline_3_es) || slide.headline_3 || '';
+    const subtext = (isEs && slide.subtext_es) || slide.subtext || '';
+
+    // Admin-configurable button text with sensible defaults
+    const primaryBtnText = (isEs && slide.button_primary_text_es) || slide.button_primary_text || 'Order Now';
+    const primaryBtnLink = slide.button_primary_link || (slide.books?.slug ? `/books/${slide.books.slug}` : '#');
+    const secondaryBtnText = (isEs && slide.button_secondary_text_es) || slide.button_secondary_text || '';
+    const secondaryBtnLink = slide.button_secondary_link || '#';
+
+    // Cover image: use book cover if linked, otherwise a default
+    const coverImage = slide.books?.cover_image_url || "/design_assets/Boricua Legacy Homepage PNG Image/screen.png";
 
     return (
         <section className={styles.section}>
@@ -64,35 +81,54 @@ const HeroSection = () => {
                         <div className={`${styles.corner} ${styles.bottomRight}`}></div>
 
                         <h1 className={styles.headline}>
-                            {slide.headline}
+                            {headline1}<br />{headline2}<br />
+                            <span className={styles.highlight}>{headline3}</span>
                         </h1>
                     </div>
 
                     <p className={styles.subtext}>
-                        {slide.subtext}
+                        {subtext}
                     </p>
 
                     <div className={styles.buttonGroup}>
-                        <Link href="/books/boricua-legacy" className={styles.primaryBtn}>{t('buttons.primary')}</Link>
-                        <button className={styles.secondaryBtn}>{t('buttons.secondary')}</button>
+                        <Link href={primaryBtnLink} className={styles.primaryBtn}>
+                            {primaryBtnText}
+                        </Link>
+                        {secondaryBtnText && (
+                            secondaryBtnLink !== '#' ? (
+                                <Link href={secondaryBtnLink} className={styles.secondaryBtn}>
+                                    {secondaryBtnText}
+                                </Link>
+                            ) : (
+                                <button className={styles.secondaryBtn}>{secondaryBtnText}</button>
+                            )
+                        )}
                     </div>
                 </div>
 
-                {/* Right Column: 3D Book Cover */}
+                {/* Right Column: Book Cover Image */}
                 <div className={`${styles.imageColumn} ${isExiting ? styles.exit : ''}`}>
-                    <div className={styles.bookWrapper}>
-                        <div className={styles.bookCover} style={{ backgroundImage: `url('${slide.coverImage}')` }}>
-                            {/* 
-                  Using CSS to create the 3D book effect. 
-                  Background image mimics the cover.
-                */}
-                            <div className={styles.bookSpine}>
-                                <span className={styles.spineText} style={{ color: slide.spineColor || 'var(--accent-gold)' }}>
-                                    {slide.spineText}
-                                </span>
+                    {slide.show_spine ? (
+                        /* 3D Book with CSS Spine */
+                        <div className={styles.bookWrapper3d}>
+                            <div className={styles.bookCover} style={{ backgroundImage: `url('${coverImage}')` }}>
+                                <div className={styles.bookSpine}>
+                                    <span className={styles.spineText}>
+                                        {slide.books?.title || 'BORICUA LEGACY'}
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    ) : (
+                        /* Clean Image (for transparent renders) */
+                        <div className={styles.bookWrapper}>
+                            <img
+                                src={coverImage}
+                                alt={slide.books?.title || 'Book Cover'}
+                                className={styles.bookImage}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
 

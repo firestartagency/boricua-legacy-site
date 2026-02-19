@@ -175,13 +175,13 @@
     color: #fff;
 }
 
-/* Right Column (3D Book) */
+/* Right Column (Book Image) */
 .imageColumn {
     flex: 1;
     width: 100%;
     display: flex;
     justify-content: center;
-    perspective: 1000px;
+    align-items: center;
     transition: transform 3s ease-in-out, opacity 3s ease-in-out;
     transform: translateX(0);
     opacity: 1;
@@ -189,11 +189,29 @@
 }
 
 .imageColumn.exit {
-    transform: translateX(100vw);
+    transform: translateX(60vw);
     opacity: 0;
 }
 
 .bookWrapper {
+    position: relative;
+    max-width: 380px;
+    width: 100%;
+}
+
+.bookImage {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.bookWrapper:hover .bookImage {
+    transform: translateY(-4px);
+}
+
+/* 3D Book with Spine (when show_spine is enabled) */
+.bookWrapper3d {
     position: relative;
     width: 300px;
     height: 450px;
@@ -204,25 +222,16 @@
     border-radius: 0 8px 8px 0;
 }
 
-.imageColumn.exit {
-    transform: translateX(60vw);
-    opacity: 0;
-}
-
 .bookCover {
     width: 100%;
     height: 100%;
     background-color: #0f1923;
-    /* Dark box in case image fails */
-    background-image: url('/design_assets/Boricua Legacy Homepage PNG Image/screen.png');
-    /* Placeholder */
     background-size: cover;
     background-position: center;
     border-radius: 0 8px 8px 0;
     position: relative;
 }
 
-/* 3D Spine Effect */
 .bookSpine {
     position: absolute;
     top: 0;
@@ -270,10 +279,13 @@
 
     .headline {
         font-size: 3.75rem;
-        /* text-6xl */
     }
 
     .bookWrapper {
+        max-width: 440px;
+    }
+
+    .bookWrapper3d {
         width: 380px;
         height: 570px;
     }
@@ -286,6 +298,5 @@
 @media (min-width: 1024px) {
     .headline {
         font-size: 4.5rem;
-        /* text-7xl */
     }
 }

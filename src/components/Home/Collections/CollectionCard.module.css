@@ -5,26 +5,19 @@
     border-radius: 1rem;
     overflow: hidden;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-
-    /* Strict Viewport Sizing for "Full Frame" feel */
     width: 90vw;
     height: 80vh;
-    /* Fallback */
     height: 80dvh;
-    /* Target height */
-    /* THE SAFETY VALVE: Ensures card is smaller than Viewport - Header - Buffer */
     max-height: calc(100dvh - 6rem);
     max-width: 1600px;
-    /* Cap width on ultra-wide screens */
     border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
+/* ── Visual Side ── */
 .visualSide {
     background-color: var(--theme-color-bg, #f3f4f6);
     padding: 0;
-    /* Remove padding for edge-to-edge look */
     width: 100%;
-    /* Mobile: Split height, e.g., 40% visual, 60% text */
     height: 40%;
     min-height: unset;
     overflow: hidden;
@@ -32,39 +25,62 @@
     flex-direction: column;
 }
 
-/* Grid Container */
+/* ── Grid Container ── */
 .gridContainer {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
     gap: 2px;
-    /* Tiny gap for clean separation */
     width: 100%;
     height: 100%;
 }
 
-/* Grid Items */
+/* Default: 2x2 */
+.gridContainer {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+/* 1 item: single full-bleed */
+.gridCount1 {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+}
+
+/* 2 items: side-by-side */
+.gridCount2 {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+/* 3 items: featured left + 2 stacked right */
+.gridCount3 {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+/* 4 items: 2x2 bento */
+.gridCount4 {
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+/* ── Grid Items ── */
 .gridItem {
     position: relative;
     overflow: hidden;
     background-color: white;
-    /* No border radius on internal items for edge-to-edge look,
-       or keep it if "bento" style desired. Let's go fully flush. */
     border-radius: 0;
 }
 
 .gridItem:hover .gridImage {
     transform: scale(1.05);
-    /* Zoom effect on image instead of item transform */
 }
 
-/* Featured Item (The Book) - Made larger */
-.itemFeatured {
+/* Featured: spans 2 rows in 3-item and 4-item layouts */
+.gridCount3 .itemFeatured,
+.gridCount4 .itemFeatured {
     grid-row: span 2;
-    grid-column: span 1;
 }
 
-/* Generic Image inside grid item */
 .gridImage {
     width: 100%;
     height: 100%;
@@ -73,17 +89,53 @@
     transition: transform 0.5s ease;
 }
 
+/* Grid label overlay */
+.gridLabel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.65), transparent);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 1.5rem 0.5rem 0.4rem;
+    pointer-events: none;
+}
+
+/* "+N more" overlay */
+.moreOverlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.emptyGrid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #9ca3af;
+    font-size: 0.875rem;
+}
+
+/* ── Info Side ── */
 .infoSide {
     padding: 1.5rem;
     flex: 1;
-    /* Takes remaining height in vertical mobile layout */
     display: flex;
     flex-direction: column;
-
-    /* Critical: Internal Scroll */
     overflow-y: auto;
-
-    /* Ensure content doesn't force parent growth */
     min-height: 0;
 }
 
@@ -108,125 +160,115 @@
 .description {
     color: #666;
     line-height: 1.6;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
     font-size: 1rem;
 }
 
-.priceSection {
+/* ── Compact Pricing ── */
+.priceRow {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 1rem;
-    background: linear-gradient(135deg, #fef9e7 0%, #fdf2d8 100%);
-    border: 1px solid var(--accent-gold, #d4af37);
-    border-radius: 0.5rem;
-    margin-bottom: 1.5rem;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
 }
 
-.priceLabel {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-weight: 600;
-    color: #666;
-}
-
-.priceValue {
-    font-size: 1.5rem;
+.price {
+    font-size: 1.35rem;
     font-weight: 700;
     color: var(--accent-gold, #d4af37);
     font-family: var(--font-noto-serif), serif;
 }
 
+.originalPrice {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #9ca3af;
+    text-decoration: line-through;
+    font-family: var(--font-noto-serif), serif;
+}
+
+.salePrice {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--accent-red, #e63946);
+    font-family: var(--font-noto-serif), serif;
+}
+
+.saleBadge {
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: var(--accent-red, #e63946);
+    color: #fff;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+}
+
+/* ── Included Items ── */
 .includesList {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .includesHeader {
     font-size: 0.875rem;
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     text-transform: uppercase;
     color: #374151;
+    display: block;
 }
 
 .includesGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 1rem;
+    gap: 0.5rem;
 }
 
 .includeItem {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    font-size: 0.875rem;
+    gap: 0.5rem;
+    font-size: 0.8rem;
     color: var(--text-main);
-    padding: 0.5rem;
-    background: transparent;
-    border: 1px solid var(--accent-gold);
+    padding: 0.35rem 0.5rem;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
     border-radius: 0.25rem;
 }
 
 .checkIcon {
     color: var(--accent-gold);
     flex-shrink: 0;
+    font-weight: 700;
 }
 
-.merchSection {
+/* ── CTA Buttons ── */
+.buttonGroup {
+    display: flex;
+    gap: 0.75rem;
     margin-top: auto;
-    padding-top: 1.5rem;
-    border-top: 1px solid #f3f4f6;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.merchPreview {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.merchThumb {
-    width: 60px;
-    height: 60px;
-    background: #eee;
-    border-radius: 0.5rem;
-    background-size: cover;
-    background-position: center;
-    background-image: var(--merch-image);
-}
-
-.merchInfo {
-    display: flex;
-    flex-direction: column;
-}
-
-.merchName {
-    font-weight: 600;
-    font-size: 0.875rem;
-    color: #111;
-}
-
-.merchPrice {
-    font-size: 0.875rem;
-    color: #666;
+    padding-top: 1rem;
+    flex-wrap: wrap;
 }
 
 .ctaButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background-color: var(--accent-red);
     color: #fff;
     border: none;
     font-family: var(--font-noto-serif), serif;
     font-weight: 700;
-    font-size: 1rem;
-    height: 3rem;
-    padding: 0 2rem;
-    border-radius: 0.25rem;
+    font-size: 0.95rem;
+    height: 2.75rem;
+    padding: 0 1.75rem;
+    border-radius: 0.375rem;
     cursor: pointer;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    text-decoration: none;
 }
 
 .ctaButton:hover {
@@ -234,28 +276,47 @@
     transform: translateY(-1px);
 }
 
-/* Desktop / Tablet Styles */
+.secondaryButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: var(--accent-red, #e63946);
+    border: 2px solid var(--accent-red, #e63946);
+    font-family: var(--font-noto-serif), serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    height: 2.75rem;
+    padding: 0 1.75rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.secondaryButton:hover {
+    background: var(--accent-red, #e63946);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+/* ── Desktop ── */
 @media (min-width: 1024px) {
     .card {
         flex-direction: row;
         height: 100%;
-        /* Fill the container provided by scroll wrapper */
     }
 
     .visualSide {
         width: 55%;
-        /* Give more space to visuals */
         height: 100%;
-        /* Fill full height */
         padding: 0;
-        /* Flush to edges */
     }
 
     .infoSide {
         width: 45%;
         padding: 3.5rem;
         overflow-y: auto;
-        /* Allow scrolling text if it gets too long, but keep layout pinned */
         max-height: 100%;
     }
 
@@ -263,17 +324,10 @@
         font-size: 2.5rem;
     }
 
-    /* 
-       We want a BENTO BOX style grid.
-       3 columns, 2 rows.
-       Book takes 2 rows, 2 columns (Larger focus)
-       Other items fill remaining spots
-       Or keep 2x2 but larger.
-    */
-    .gridContainer {
+    /* Desktop bento: featured column wider */
+    .gridCount3,
+    .gridCount4 {
         grid-template-columns: 2fr 1fr;
-        /* Featured item wider */
         grid-template-rows: 1fr 1fr;
-        gap: 2px;
     }
 }

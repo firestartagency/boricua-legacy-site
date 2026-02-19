@@ -15,6 +15,15 @@ export interface Collection {
     theme_color: string;
     display_order: number;
     price: number | null;
+    original_price: number | null;
+    sale_price: number | null;
+    is_on_sale: boolean;
+    primary_btn_text: string;
+    primary_btn_text_es: string | null;
+    primary_btn_link: string | null;
+    secondary_btn_text: string | null;
+    secondary_btn_text_es: string | null;
+    secondary_btn_link: string | null;
     is_active: boolean;
     created_at: string;
     updated_at: string;
@@ -78,6 +87,7 @@ export interface HeroSlide {
     button_secondary_text_es: string | null;
     button_secondary_link: string | null;
     display_order: number;
+    show_spine: boolean;
     is_active: boolean;
     created_at: string;
 }
@@ -90,77 +100,39 @@ export type HeroSlideInsert = Omit<HeroSlide, 'id' | 'created_at'> & {
 export type HeroSlideUpdate = Partial<HeroSlideInsert>;
 
 // ============================================
-// Collection Resources
+// Collection Items (unified: merch, resources, images)
 // ============================================
-export interface CollectionResource {
+export interface CollectionItem {
     id: string;
     collection_id: string;
     name: string;
     name_es: string | null;
-    type: 'journal' | 'bookmark' | 'poster' | 'other';
+    type: 'book' | 'merch' | 'resource' | 'digital' | 'other';
     description: string | null;
     description_es: string | null;
     image_url: string | null;
-    display_order: number;
-    created_at: string;
-}
-
-export type CollectionResourceInsert = Omit<CollectionResource, 'id' | 'created_at'> & {
-    id?: string;
-    created_at?: string;
-};
-
-export type CollectionResourceUpdate = Partial<CollectionResourceInsert>;
-
-// ============================================
-// Collection Merch
-// ============================================
-export interface CollectionMerch {
-    id: string;
-    collection_id: string;
-    name: string;
-    name_es: string | null;
     price: number | null;
-    image_url: string | null;
     purchase_url: string | null;
+    is_included: boolean;
+    grid_size: 'featured' | 'standard' | 'hidden';
     display_order: number;
     is_active: boolean;
     created_at: string;
 }
 
-export type CollectionMerchInsert = Omit<CollectionMerch, 'id' | 'created_at'> & {
+export type CollectionItemInsert = Omit<CollectionItem, 'id' | 'created_at'> & {
     id?: string;
     created_at?: string;
 };
 
-export type CollectionMerchUpdate = Partial<CollectionMerchInsert>;
-
-// ============================================
-// Collection Images (preview thumbnails)
-// ============================================
-export interface CollectionImage {
-    id: string;
-    collection_id: string;
-    image_url: string;
-    alt_text: string | null;
-    display_order: number;
-    created_at: string;
-}
-
-export type CollectionImageInsert = Omit<CollectionImage, 'id' | 'created_at'> & {
-    id?: string;
-    created_at?: string;
-};
-
-export type CollectionImageUpdate = Partial<CollectionImageInsert>;
+export type CollectionItemUpdate = Partial<CollectionItemInsert>;
 
 // ============================================
 // Extended types with relations (for queries with joins)
 // ============================================
 export interface CollectionWithRelations extends Collection {
     books?: Book[];
-    collection_resources?: CollectionResource[];
-    collection_merch?: CollectionMerch[];
+    collection_items?: CollectionItem[];
 }
 
 export interface HeroSlideWithBook extends HeroSlide {
@@ -188,20 +160,10 @@ export interface Database {
                 Insert: HeroSlideInsert;
                 Update: HeroSlideUpdate;
             };
-            collection_resources: {
-                Row: CollectionResource;
-                Insert: CollectionResourceInsert;
-                Update: CollectionResourceUpdate;
-            };
-            collection_merch: {
-                Row: CollectionMerch;
-                Insert: CollectionMerchInsert;
-                Update: CollectionMerchUpdate;
-            };
-            collection_images: {
-                Row: CollectionImage;
-                Insert: CollectionImageInsert;
-                Update: CollectionImageUpdate;
+            collection_items: {
+                Row: CollectionItem;
+                Insert: CollectionItemInsert;
+                Update: CollectionItemUpdate;
             };
             blog_posts: {
                 Row: BlogPost;
