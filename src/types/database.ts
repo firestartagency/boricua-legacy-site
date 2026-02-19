@@ -81,8 +81,9 @@ export interface BookImage {
 export interface BookExcerpt {
     id: string;
     book_id: string;
-    image_url: string;
-    page_label: string;
+    file_url: string;
+    file_name: string | null;
+    label: string;
     display_order: number;
     created_at: string;
 }

@@ -200,7 +200,7 @@ export default function BookFormPage() {
 
             const { data, error: uploadError } = await supabase.storage
                 .from('book-covers')
-                .upload(fileName, file, { upsert: true });
+                .upload(fileName, file, { upsert: true, contentType: file.type });
 
             if (uploadError) {
                 setError('Failed to upload excerpt: ' + uploadError.message);
@@ -213,8 +213,9 @@ export default function BookFormPage() {
                 .from('book_excerpts')
                 .insert({
                     book_id: bookId,
-                    image_url: urlData.publicUrl,
-                    page_label: `Page ${excerpts.length + i + 1}`,
+                    file_url: urlData.publicUrl,
+                    file_name: file.name,
+                    label: `Excerpt ${excerpts.length + i + 1}`,
                     display_order: excerpts.length + i
                 } as never)
                 .select()
@@ -484,15 +485,17 @@ export default function BookFormPage() {
 
                     {/* Excerpt Pages Section */}
                     <section className={styles.section} style={{ marginTop: '1.5rem', marginBottom: '3rem' }}>
-                        <h2>📖 Excerpt Pages</h2>
-                        <p className={styles.hint}>Upload images of excerpt pages. Viewers will see these in a popup carousel.</p>
+                        <h2>📖 Excerpt PDF</h2>
+                        <p className={styles.hint}>Upload a PDF excerpt. Viewers will see this in a popup on the book page.</p>
 
-                        <div className={styles.imageGrid}>
-                            {excerpts.map((ex, idx) => (
-                                <div key={ex.id} className={styles.imageCard}>
-                                    <img src={ex.image_url} alt={ex.page_label} className={styles.imageThumb} />
-                                    <div className={styles.imageActions}>
-                                        <span className={styles.pageLabel}>Page {idx + 1}</span>
+                        {excerpts.length > 0 && (
+                            <div className={styles.editionsList}>
+                                {excerpts.map((ex) => (
+                                    <div key={ex.id} className={styles.editionRow}>
+                                        <span className={styles.editionFormat}>📄 {ex.file_name || ex.label}</span>
+                                        <a href={ex.file_url} target="_blank" rel="noopener noreferrer" className={styles.editionLink}>
+                                            View PDF ↗
+                                        </a>
                                         <button
                                             type="button"
                                             onClick={() => deleteExcerpt(ex.id)}
@@ -500,16 +503,15 @@ export default function BookFormPage() {
                                             title="Delete"
                                         >✕</button>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
+                        )}
 
                         <input
                             type="file"
                             ref={excerptInputRef}
                             onChange={handleExcerptUpload}
-                            accept="image/png,image/jpeg,image/webp"
-                            multiple
+                            accept="application/pdf"
                             hidden
                         />
                         <button
@@ -518,7 +520,7 @@ export default function BookFormPage() {
                             className={styles.uploadBtn}
                             disabled={isUploading}
                         >
-                            {isUploading ? 'Uploading...' : '+ Upload Excerpt Pages'}
+                            {isUploading ? 'Uploading...' : '+ Upload Excerpt PDF'}
                         </button>
                     </section>
                 </>
