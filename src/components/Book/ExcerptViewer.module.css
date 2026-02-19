@@ -2,7 +2,7 @@
 .overlay {
     position: fixed;
     inset: 0;
-    background: rgba(10, 15, 30, 0.85);
+    background: rgba(0, 20, 60, 0.88);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     z-index: 1000;
@@ -46,12 +46,12 @@
     }
 }
 
-/* Top Bar */
+/* Top Bar — #002B7F base */
 .topBar {
     display: flex;
     align-items: center;
     padding: 0.75rem 1.25rem;
-    background: linear-gradient(135deg, #0a1628 0%, #132b50 100%);
+    background: linear-gradient(135deg, #001a4d 0%, #002B7F 100%);
     border-radius: 12px 12px 0 0;
     border: 1px solid rgba(212, 175, 55, 0.3);
     border-bottom: none;
@@ -126,10 +126,10 @@
     font-size: 1.1rem;
 }
 
-/* Page Container */
+/* Page Container — #002B7F tones */
 .pageContainer {
     flex: 1;
-    background: linear-gradient(180deg, #1a2a4a 0%, #0f1f3a 100%);
+    background: linear-gradient(180deg, #002B7F 0%, #001a4d 100%);
     border-left: 1px solid rgba(212, 175, 55, 0.3);
     border-right: 1px solid rgba(212, 175, 55, 0.3);
     display: flex;
@@ -182,10 +182,12 @@
     z-index: 1;
 }
 
-.pageCanvas {
+.pageImage {
     display: block;
     max-width: 100%;
+    max-height: 65vh;
     height: auto;
+    width: auto;
 }
 
 /* Loading State */
@@ -213,14 +215,14 @@
     }
 }
 
-/* Bottom Navigation Bar */
+/* Bottom Navigation Bar — #002B7F */
 .bottomBar {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1.5rem;
     padding: 0.75rem 1.25rem;
-    background: linear-gradient(135deg, #132b50 0%, #0a1628 100%);
+    background: linear-gradient(135deg, #002B7F 0%, #001a4d 100%);
     border-left: 1px solid rgba(212, 175, 55, 0.3);
     border-right: 1px solid rgba(212, 175, 55, 0.3);
 }

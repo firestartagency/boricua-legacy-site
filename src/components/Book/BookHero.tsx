@@ -218,7 +218,7 @@ const BookHero = ({ slug }: BookHeroProps) => {
             {showExcerpt && excerpts.length > 0 && (
                 <Suspense fallback={null}>
                     <ExcerptViewer
-                        pdfUrl={excerpts[0].file_url}
+                        pages={excerpts.map(ex => ({ file_url: ex.file_url, label: ex.label }))}
                         bookTitle={book.title}
                         onClose={() => setShowExcerpt(false)}
                     />

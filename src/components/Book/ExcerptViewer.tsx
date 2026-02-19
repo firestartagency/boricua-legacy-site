@@ -1,84 +1,29 @@
 'use client';
 
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './ExcerptViewer.module.css';
 
 interface ExcerptViewerProps {
-    pdfUrl: string;
+    pages: { file_url: string; label: string }[];
     bookTitle: string;
     onClose: () => void;
 }
 
-const ExcerptViewer = ({ pdfUrl, bookTitle, onClose }: ExcerptViewerProps) => {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(0);
-    const [isLoading, setIsLoading] = useState(true);
-    const [pdfDoc, setPdfDoc] = useState<ReturnType<typeof Object> | null>(null);
-
-    // Load PDF document
-    useEffect(() => {
-        const loadPdf = async () => {
-            const pdfjsLib = await import('pdfjs-dist');
-            pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`;
-
-            try {
-                const doc = await pdfjsLib.getDocument(pdfUrl).promise;
-                setPdfDoc(doc);
-                setTotalPages(doc.numPages);
-                setIsLoading(false);
-            } catch {
-                setIsLoading(false);
-            }
-        };
-
-        loadPdf();
-    }, [pdfUrl]);
-
-    // Render current page
-    const renderPage = useCallback(async () => {
-        if (!pdfDoc || !canvasRef.current) return;
-
-        const page = await (pdfDoc as {
-            getPage: (n: number) => Promise<{
-                getViewport: (opts: { scale: number }) => { width: number; height: number };
-                render: (opts: { canvasContext: CanvasRenderingContext2D; viewport: { width: number; height: number } }) => { promise: Promise<void> };
-            }>
-        }).getPage(currentPage);
-
-        const canvas = canvasRef.current;
-        const context = canvas.getContext('2d');
-        if (!context) return;
-
-        // Scale to fit the modal nicely
-        const containerWidth = canvas.parentElement?.clientWidth || 600;
-        const baseViewport = page.getViewport({ scale: 1 });
-        const scale = Math.min(
-            (containerWidth - 40) / baseViewport.width,
-            (window.innerHeight * 0.65) / baseViewport.height
-        );
-        const viewport = page.getViewport({ scale });
-
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
-
-        await page.render({ canvasContext: context, viewport }).promise;
-    }, [pdfDoc, currentPage]);
-
-    useEffect(() => {
-        renderPage();
-    }, [renderPage]);
+const ExcerptViewer = ({ pages, bookTitle, onClose }: ExcerptViewerProps) => {
+    const [currentPage, setCurrentPage] = useState(0);
 
     // Keyboard navigation
     useEffect(() => {
         const handleKey = (e: KeyboardEvent) => {
             if (e.key === 'Escape') onClose();
-            if (e.key === 'ArrowRight' && currentPage < totalPages) setCurrentPage(p => p + 1);
-            if (e.key === 'ArrowLeft' && currentPage > 1) setCurrentPage(p => p - 1);
+            if (e.key === 'ArrowRight' && currentPage < pages.length - 1) setCurrentPage(p => p + 1);
+            if (e.key === 'ArrowLeft' && currentPage > 0) setCurrentPage(p => p - 1);
         };
         window.addEventListener('keydown', handleKey);
         return () => window.removeEventListener('keydown', handleKey);
-    }, [currentPage, totalPages, onClose]);
+    }, [currentPage, pages.length, onClose]);
+
+    if (pages.length === 0) return null;
 
     return (
         <div className={styles.overlay} onClick={onClose}>
@@ -99,39 +44,36 @@ const ExcerptViewer = ({ pdfUrl, bookTitle, onClose }: ExcerptViewerProps) => {
 
                 {/* Page display */}
                 <div className={styles.pageContainer}>
-                    {isLoading ? (
-                        <div className={styles.loadingState}>
-                            <div className={styles.spinner}></div>
-                            <p>Preparing excerpt...</p>
-                        </div>
-                    ) : (
-                        <div className={styles.pageFrame}>
-                            <canvas ref={canvasRef} className={styles.pageCanvas} />
-                        </div>
-                    )}
+                    <div className={styles.pageFrame}>
+                        <img
+                            src={pages[currentPage].file_url}
+                            alt={pages[currentPage].label}
+                            className={styles.pageImage}
+                        />
+                    </div>
                 </div>
 
                 {/* Bottom navigation */}
-                {totalPages > 0 && (
+                {pages.length > 1 && (
                     <div className={styles.bottomBar}>
                         <button
                             className={styles.navBtn}
-                            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                            disabled={currentPage <= 1}
+                            onClick={() => setCurrentPage(p => Math.max(0, p - 1))}
+                            disabled={currentPage <= 0}
                         >
                             <span className="material-symbols-outlined">chevron_left</span>
                         </button>
 
                         <div className={styles.pageInfo}>
-                            <span className={styles.pageNumber}>{currentPage}</span>
+                            <span className={styles.pageNumber}>{currentPage + 1}</span>
                             <span className={styles.pageDivider}>of</span>
-                            <span className={styles.pageNumber}>{totalPages}</span>
+                            <span className={styles.pageNumber}>{pages.length}</span>
                         </div>
 
                         <button
                             className={styles.navBtn}
-                            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                            disabled={currentPage >= totalPages}
+                            onClick={() => setCurrentPage(p => Math.min(pages.length - 1, p + 1))}
+                            disabled={currentPage >= pages.length - 1}
                         >
                             <span className="material-symbols-outlined">chevron_right</span>
                         </button>

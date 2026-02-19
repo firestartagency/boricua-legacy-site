@@ -188,42 +188,69 @@ export default function BookFormPage() {
     // --- EXCERPT HANDLERS ---
     const handleExcerptUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
-        if (!files || !bookId) return;
+        if (!files || !bookId || files.length === 0) return;
 
         setIsUploading(true);
         setError(null);
 
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            const fileExt = file.name.split('.').pop();
-            const fileName = `${bookId}/excerpts/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+        const file = files[0];
 
-            const { data, error: uploadError } = await supabase.storage
-                .from('book-covers')
-                .upload(fileName, file, { upsert: true, contentType: file.type });
+        try {
+            // Import PDF.js and render pages to WebP images
+            const pdfjsLib = await import('pdfjs-dist');
+            pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`;
 
-            if (uploadError) {
-                setError('Failed to upload excerpt: ' + uploadError.message);
-                continue;
+            const arrayBuffer = await file.arrayBuffer();
+            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+            for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                const page = await pdf.getPage(pageNum);
+                const viewport = page.getViewport({ scale: 2 }); // 2x for quality
+
+                const canvas = document.createElement('canvas');
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                const ctx = canvas.getContext('2d');
+                if (!ctx) continue;
+
+                await page.render({ canvasContext: ctx, viewport } as never).promise;
+
+                // Convert canvas to WebP blob
+                const blob: Blob = await new Promise((resolve) => {
+                    canvas.toBlob((b) => resolve(b!), 'image/webp', 0.9);
+                });
+
+                const fileName = `${bookId}/excerpts/page-${pageNum}-${Date.now()}.webp`;
+
+                const { data, error: uploadError } = await supabase.storage
+                    .from('book-covers')
+                    .upload(fileName, blob, { upsert: true, contentType: 'image/webp' });
+
+                if (uploadError) {
+                    setError(`Failed to convert page ${pageNum}: ${uploadError.message}`);
+                    continue;
+                }
+
+                const { data: urlData } = supabase.storage.from('book-covers').getPublicUrl(data.path);
+
+                const { data: excerptData } = await supabase
+                    .from('book_excerpts')
+                    .insert({
+                        book_id: bookId,
+                        file_url: urlData.publicUrl,
+                        file_name: `Page ${pageNum}`,
+                        label: `Page ${pageNum} of ${pdf.numPages}`,
+                        display_order: excerpts.length + pageNum - 1
+                    } as never)
+                    .select()
+                    .single();
+
+                if (excerptData) {
+                    setExcerpts(prev => [...prev, excerptData as unknown as BookExcerpt]);
+                }
             }
-
-            const { data: urlData } = supabase.storage.from('book-covers').getPublicUrl(data.path);
-
-            const { data: excerptData } = await supabase
-                .from('book_excerpts')
-                .insert({
-                    book_id: bookId,
-                    file_url: urlData.publicUrl,
-                    file_name: file.name,
-                    label: `Excerpt ${excerpts.length + i + 1}`,
-                    display_order: excerpts.length + i
-                } as never)
-                .select()
-                .single();
-
-            if (excerptData) {
-                setExcerpts(prev => [...prev, excerptData as unknown as BookExcerpt]);
-            }
+        } catch (err) {
+            setError('Failed to process PDF: ' + (err instanceof Error ? err.message : String(err)));
         }
 
         setIsUploading(false);
@@ -234,6 +261,7 @@ export default function BookFormPage() {
         await supabase.from('book_excerpts').delete().eq('id', excerptId);
         setExcerpts(prev => prev.filter(e => e.id !== excerptId));
     };
+
 
     // --- BOOK FORM HANDLERS ---
     const generateSlug = () => {
@@ -485,23 +513,23 @@ export default function BookFormPage() {
 
                     {/* Excerpt Pages Section */}
                     <section className={styles.section} style={{ marginTop: '1.5rem', marginBottom: '3rem' }}>
-                        <h2>📖 Excerpt PDF</h2>
-                        <p className={styles.hint}>Upload a PDF excerpt. Viewers will see this in a popup on the book page.</p>
+                        <h2>📖 Excerpt Pages</h2>
+                        <p className={styles.hint}>Upload a PDF — each page will be converted to an image automatically.</p>
 
                         {excerpts.length > 0 && (
-                            <div className={styles.editionsList}>
+                            <div className={styles.imageGrid}>
                                 {excerpts.map((ex) => (
-                                    <div key={ex.id} className={styles.editionRow}>
-                                        <span className={styles.editionFormat}>📄 {ex.file_name || ex.label}</span>
-                                        <a href={ex.file_url} target="_blank" rel="noopener noreferrer" className={styles.editionLink}>
-                                            View PDF ↗
-                                        </a>
-                                        <button
-                                            type="button"
-                                            onClick={() => deleteExcerpt(ex.id)}
-                                            className={styles.deleteSmBtn}
-                                            title="Delete"
-                                        >✕</button>
+                                    <div key={ex.id} className={styles.imageCard}>
+                                        <img src={ex.file_url} alt={ex.label} className={styles.imageThumb} />
+                                        <div className={styles.imageActions}>
+                                            <span className={styles.pageLabel}>{ex.file_name}</span>
+                                            <button
+                                                type="button"
+                                                onClick={() => deleteExcerpt(ex.id)}
+                                                className={styles.deleteSmBtn}
+                                                title="Delete"
+                                            >✕</button>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
@@ -520,7 +548,7 @@ export default function BookFormPage() {
                             className={styles.uploadBtn}
                             disabled={isUploading}
                         >
-                            {isUploading ? 'Uploading...' : '+ Upload Excerpt PDF'}
+                            {isUploading ? 'Converting pages...' : '+ Upload Excerpt PDF'}
                         </button>
                     </section>
                 </>
