@@ -130,13 +130,16 @@ export default function HeroSlideFormPage() {
     };
 
     // When a book is selected, auto-fill the primary button link with its slug
+    // and set the secondary button to link to the excerpt
     const handleBookChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const bookId = e.target.value;
         const selectedBook = books.find(b => b.id === bookId);
         setFormData(prev => ({
             ...prev,
             book_id: bookId,
-            button_primary_link: selectedBook ? `/books/${selectedBook.slug}` : prev.button_primary_link
+            button_primary_link: selectedBook ? `/books/${selectedBook.slug}` : prev.button_primary_link,
+            button_secondary_text: selectedBook ? 'Read an Excerpt' : prev.button_secondary_text,
+            button_secondary_link: selectedBook ? `/books/${selectedBook.slug}?excerpt=true` : prev.button_secondary_link
         }));
     };
 

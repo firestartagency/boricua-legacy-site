@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { createClientComponentClient } from '@/lib/supabase';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import type { Book, BookImage, BookEdition, BookExcerpt } from '@/types/database';
 import styles from './BookHero.module.css';
 
@@ -12,6 +13,7 @@ interface BookHeroProps {
 
 const BookHero = ({ slug }: BookHeroProps) => {
     const supabase = createClientComponentClient();
+    const searchParams = useSearchParams();
     const [book, setBook] = useState<Book | null>(null);
     const [images, setImages] = useState<BookImage[]>([]);
     const [editions, setEditions] = useState<BookEdition[]>([]);
@@ -51,7 +53,14 @@ const BookHero = ({ slug }: BookHeroProps) => {
 
         setImages((imagesRes.data as unknown as BookImage[]) || []);
         setEditions((editionsRes.data as unknown as BookEdition[]) || []);
-        setExcerpts((excerptsRes.data as unknown as BookExcerpt[]) || []);
+        const excerptData = (excerptsRes.data as unknown as BookExcerpt[]) || [];
+        setExcerpts(excerptData);
+
+        // Auto-open excerpt modal if ?excerpt=true in URL
+        if (searchParams.get('excerpt') === 'true' && excerptData.length > 0) {
+            setShowExcerpt(true);
+        }
+
         setIsLoading(false);
     };
 
