@@ -3,17 +3,13 @@
 import { createClientComponentClient } from '@/lib/supabase';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import type { Book, Collection } from '@/types/database';
+import type { Book } from '@/types/database';
 import styles from './page.module.css';
-
-interface BookWithCollection extends Book {
-    collections?: Collection;
-}
 
 export default function BooksPage() {
     const supabase = createClientComponentClient();
     const router = useRouter();
-    const [books, setBooks] = useState<BookWithCollection[]>([]);
+    const [books, setBooks] = useState<Book[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -23,11 +19,11 @@ export default function BooksPage() {
     const fetchBooks = async () => {
         const { data, error } = await supabase
             .from('books')
-            .select('*, collections(*)')
+            .select('*')
             .order('title', { ascending: true });
 
         if (!error) {
-            setBooks((data as unknown as BookWithCollection[]) || []);
+            setBooks((data as unknown as Book[]) || []);
         }
         setIsLoading(false);
     };
@@ -57,7 +53,7 @@ export default function BooksPage() {
             <header className={styles.header}>
                 <div>
                     <h1>Books</h1>
-                    <p>Manage books and their cover images</p>
+                    <p>Manage books, editions, images, and excerpts</p>
                 </div>
                 <button
                     onClick={() => router.push('/admin/books/new')}
@@ -85,8 +81,6 @@ export default function BooksPage() {
                                 <th>Cover</th>
                                 <th>Title</th>
                                 <th>Author</th>
-                                <th>Collection</th>
-                                <th>Price</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -109,8 +103,6 @@ export default function BooksPage() {
                                         <span className={styles.slug}>/{book.slug}</span>
                                     </td>
                                     <td>{book.author || '—'}</td>
-                                    <td>{book.collections?.title || '—'}</td>
-                                    <td>${book.price?.toFixed(2) || '—'}</td>
                                     <td>
                                         <span className={`${styles.status} ${book.is_active ? styles.active : styles.inactive}`}>
                                             {book.is_active ? 'Active' : 'Inactive'}

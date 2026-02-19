@@ -110,9 +110,9 @@ const Header = () => {
 
                 {/* Desktop Nav */}
                 <nav className={styles.nav}>
-                    <a href="#collection" className={`${styles.navLink} ${activeSection === 'collection' ? styles.activeLink : ''}`}>{t('collection')}</a>
-                    <a href="#author" className={`${styles.navLink} ${activeSection === 'author' ? styles.activeLink : ''}`}>{t('author')}</a>
+                    <a href="#collection" className={`${styles.navLink} ${activeSection === 'collection' ? styles.activeLink : ''}`}>{t('collections')}</a>
                     <a href="#mission" className={`${styles.navLink} ${activeSection === 'mission' ? styles.activeLink : ''}`}>{t('mission')}</a>
+                    <a href="#author" className={`${styles.navLink} ${activeSection === 'author' ? styles.activeLink : ''}`}>{t('authors')}</a>
                     <Link href="/blog" className={styles.navLink}>Blog</Link>
                     <Link href="/press" className={styles.navLink}>Press</Link>
                 </nav>
@@ -166,9 +166,9 @@ const Header = () => {
                 className={`${styles.mobileNav} ${isMenuOpen ? styles.mobileNavOpen : ''}`}
                 aria-hidden={!isMenuOpen}
             >
-                <a href="#collection" className={`${styles.mobileNavLink} ${activeSection === 'collection' ? styles.activeMobileLink : ''}`} onClick={closeMenu}>{t('collection')}</a>
-                <a href="#author" className={`${styles.mobileNavLink} ${activeSection === 'author' ? styles.activeMobileLink : ''}`} onClick={closeMenu}>{t('author')}</a>
+                <a href="#collection" className={`${styles.mobileNavLink} ${activeSection === 'collection' ? styles.activeMobileLink : ''}`} onClick={closeMenu}>{t('collections')}</a>
                 <a href="#mission" className={`${styles.mobileNavLink} ${activeSection === 'mission' ? styles.activeMobileLink : ''}`} onClick={closeMenu}>{t('mission')}</a>
+                <a href="#author" className={`${styles.mobileNavLink} ${activeSection === 'author' ? styles.activeMobileLink : ''}`} onClick={closeMenu}>{t('authors')}</a>
                 <Link href="/blog" className={styles.mobileNavLink} onClick={closeMenu}>Blog</Link>
                 <Link href="/press" className={styles.mobileNavLink} onClick={closeMenu}>Press</Link>
 

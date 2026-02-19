@@ -42,17 +42,13 @@ export type CollectionUpdate = Partial<CollectionInsert>;
 // ============================================
 export interface Book {
     id: string;
-    collection_id: string | null;
     slug: string;
     title: string;
     title_es: string | null;
     author: string | null;
-    price: number | null;
     description: string | null;
     description_es: string | null;
     cover_image_url: string | null;
-    spine_text: string | null;
-    spine_color: string;
     is_active: boolean;
     created_at: string;
     updated_at: string;
@@ -65,6 +61,45 @@ export type BookInsert = Omit<Book, 'id' | 'created_at' | 'updated_at'> & {
 };
 
 export type BookUpdate = Partial<BookInsert>;
+
+// ============================================
+// Book Images (gallery)
+// ============================================
+export interface BookImage {
+    id: string;
+    book_id: string;
+    image_url: string;
+    alt_text: string | null;
+    display_order: number;
+    is_cover: boolean;
+    created_at: string;
+}
+
+// ============================================
+// Book Excerpts (uploaded excerpt pages)
+// ============================================
+export interface BookExcerpt {
+    id: string;
+    book_id: string;
+    image_url: string;
+    page_label: string;
+    display_order: number;
+    created_at: string;
+}
+
+// ============================================
+// Book Editions (format/pricing)
+// ============================================
+export interface BookEdition {
+    id: string;
+    book_id: string;
+    format_name: string;
+    price: number;
+    purchase_link: string | null;
+    is_featured: boolean;
+    display_order: number;
+    created_at: string;
+}
 
 // ============================================
 // Hero Slides

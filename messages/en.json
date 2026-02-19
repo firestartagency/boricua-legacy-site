@@ -3,8 +3,8 @@
         "title": "Boricua Legacy",
         "header": {
             "links": {
-                "collection": "Collection",
-                "author": "Author",
+                "collections": "Collections",
+                "authors": "Authors",
                 "mission": "Mission"
             },
             "waitlist": "Join the Waitlist"
