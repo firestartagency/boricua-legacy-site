@@ -2,10 +2,12 @@
 
 import Link from 'next/link';
 import { createClientComponentClient } from '@/lib/supabase';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import type { Book, BookImage, BookEdition, BookExcerpt } from '@/types/database';
 import styles from './BookHero.module.css';
+
+const ExcerptViewer = lazy(() => import('./ExcerptViewer'));
 
 interface BookHeroProps {
     slug: string;
@@ -212,28 +214,15 @@ const BookHero = ({ slug }: BookHeroProps) => {
                 </div>
             </div>
 
-            {/* Excerpt PDF Modal */}
+            {/* Excerpt Viewer */}
             {showExcerpt && excerpts.length > 0 && (
-                <div className={styles.excerptOverlay} onClick={() => setShowExcerpt(false)}>
-                    <div className={styles.excerptModal} onClick={e => e.stopPropagation()}>
-                        <div className={styles.excerptHeader}>
-                            <h3>Excerpt: {book.title}</h3>
-                            <button
-                                className={styles.excerptClose}
-                                onClick={() => setShowExcerpt(false)}
-                            >
-                                <span className="material-symbols-outlined">close</span>
-                            </button>
-                        </div>
-                        <div className={styles.excerptBody}>
-                            <iframe
-                                src={excerpts[0].file_url}
-                                className={styles.excerptPdf}
-                                title={`Excerpt from ${book.title}`}
-                            />
-                        </div>
-                    </div>
-                </div>
+                <Suspense fallback={null}>
+                    <ExcerptViewer
+                        pdfUrl={excerpts[0].file_url}
+                        bookTitle={book.title}
+                        onClose={() => setShowExcerpt(false)}
+                    />
+                </Suspense>
             )}
         </section>
     );
