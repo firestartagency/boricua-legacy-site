@@ -5,6 +5,15 @@
     padding: 0 1.5rem;
 }
 
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    color: #666;
+    font-size: 1.1rem;
+}
+
 /* Breadcrumbs */
 .breadcrumbsContainer {
     padding: 2rem 0 1rem;
@@ -15,12 +24,9 @@
     align-items: center;
     gap: 0.5rem;
     font-size: 0.75rem;
-    /* text-xs */
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    /* tracking-widest */
     color: #6b7280;
-    /* gray-500 */
     margin-bottom: 0.5rem;
 }
 
@@ -39,7 +45,6 @@
 .crumbActive {
     font-weight: 700;
     color: #1f2937;
-    /* gray-800 */
 }
 
 .separator {
@@ -67,7 +72,6 @@
     perspective: 1000px;
     margin-bottom: 2rem;
     width: 300px;
-    /* Base width */
 }
 
 .book3dContainer {
@@ -79,8 +83,6 @@
 .bookCover {
     width: 100%;
     height: 100%;
-    background-image: url('/design_assets/Book Product Page/screen.png');
-    /* Placeholder */
     background-size: cover;
     background-position: center;
     border-radius: 0 4px 4px 0;
@@ -133,9 +135,7 @@
 
 .thumb {
     width: 4rem;
-    /* w-16 */
     height: 6rem;
-    /* h-24 */
     border: 1px solid #e5e7eb;
     border-radius: 0.25rem;
     overflow: hidden;
@@ -157,12 +157,10 @@
     box-shadow: 0 0 0 2px rgba(0, 80, 160, 0.2);
 }
 
-.thumbImage {
+.thumbImg {
     width: 100%;
     height: 100%;
-    background-image: url('/design_assets/Book Product Page/screen.png');
-    background-size: cover;
-    background-position: center;
+    object-fit: cover;
 }
 
 .thumb span {
@@ -219,7 +217,6 @@
 .title {
     font-family: var(--font-noto-serif), serif;
     font-size: 2.25rem;
-    /* text-4xl */
     font-weight: 700;
     color: var(--text-main);
     line-height: 1.1;
@@ -239,9 +236,8 @@
 }
 
 .pullQuote {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     color: #374151;
-    /* gray-700 */
     line-height: 1.6;
     margin-bottom: 2rem;
     padding-left: 1.5rem;
@@ -271,12 +267,18 @@
 .formatCard {
     padding: 0.75rem 1.5rem;
     border: 1px solid #d1d5db;
-    /* gray-300 */
     border-radius: 0.25rem;
     background-color: white;
     transition: all 0.2s;
     display: flex;
     flex-direction: column;
+}
+
+.formatCardActive {
+    background-color: rgba(0, 80, 160, 0.05);
+    border: 2px solid var(--accent-gold);
+    padding: calc(0.75rem - 1px) calc(1.5rem - 1px);
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
 }
 
 .radioLabel:hover .formatCard {
@@ -285,10 +287,8 @@
 
 .radioInput:checked+.formatCard {
     background-color: rgba(0, 80, 160, 0.05);
-    /* primary/5 */
     border: 2px solid var(--accent-gold);
     padding: calc(0.75rem - 1px) calc(1.5rem - 1px);
-    /* Adjustment for border width difference */
     box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
 }
 
@@ -298,16 +298,10 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: #111827;
-    /* gray-900 */
-}
-
-.radioInput:checked+.formatCard .formatName {
-    /* Styles for checked state if needed */
 }
 
 .radioInput:not(:checked)+.formatCard .formatName {
     color: #6b7280;
-    /* gray-500 */
 }
 
 .formatPrice {
@@ -323,7 +317,6 @@
     background-color: var(--accent-gold);
     color: white;
     font-size: 0.625rem;
-    /* tiny */
     font-weight: 700;
     padding: 0.125rem 0.5rem;
     border-radius: 9999px;
@@ -355,6 +348,7 @@
     justify-content: center;
     gap: 0.5rem;
     font-family: var(--font-noto-serif), serif;
+    text-decoration: none;
 }
 
 .buyBtn:hover {
@@ -401,11 +395,78 @@
     font-size: 1rem;
 }
 
+/* Excerpt Modal */
+.excerptOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.excerptModal {
+    background: white;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 900px;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+}
+
+.excerptHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.excerptHeader h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin: 0;
+}
+
+.excerptClose {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6b7280;
+    padding: 0.25rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.excerptClose:hover {
+    background: #f3f4f6;
+    color: #1f2937;
+}
+
+.excerptBody {
+    flex: 1;
+    overflow: hidden;
+}
+
+.excerptPdf {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
 /* Responsive */
 @media (min-width: 768px) {
     .grid {
         grid-template-columns: 5fr 7fr;
-        /* 5/12 and 7/12 roughly */
         gap: 4rem;
     }
 
@@ -415,7 +476,6 @@
 
     .title {
         font-size: 3rem;
-        /* text-5xl */
     }
 
     .actions {
@@ -426,6 +486,5 @@
 @media (min-width: 1024px) {
     .title {
         font-size: 3.75rem;
-        /* text-6xl */
     }
 }
