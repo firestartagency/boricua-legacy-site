@@ -129,6 +129,19 @@ export default function HeroSlideFormPage() {
         }));
     };
 
+    // When a book is selected, auto-fill the primary button link with its slug
+    const handleBookChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const bookId = e.target.value;
+        const selectedBook = books.find(b => b.id === bookId);
+        setFormData(prev => ({
+            ...prev,
+            book_id: bookId,
+            button_primary_link: selectedBook ? `/books/${selectedBook.slug}` : prev.button_primary_link
+        }));
+    };
+
+    const selectedBook = books.find(b => b.id === formData.book_id);
+
     if (isLoading) {
         return <div className={styles.loading}>Loading...</div>;
     }
@@ -311,23 +324,40 @@ export default function HeroSlideFormPage() {
                 {/* Book Selection */}
                 <section className={styles.section}>
                     <h2>📖 Linked Book</h2>
-                    <p className={styles.hint}>The book cover image will be displayed from this book</p>
+                    <p className={styles.hint}>Select a book — its cover image will be shown and the button link will auto-fill</p>
 
                     <div className={styles.field}>
                         <label>Select Book</label>
                         <select
                             name="book_id"
                             value={formData.book_id}
-                            onChange={handleChange}
+                            onChange={handleBookChange}
                         >
                             <option value="">-- No book linked --</option>
                             {books.map(book => (
                                 <option key={book.id} value={book.id}>
-                                    {book.title}
+                                    {book.title} → /books/{book.slug}
                                 </option>
                             ))}
                         </select>
                     </div>
+
+                    {selectedBook && (
+                        <div style={{ marginTop: '1rem', padding: '1rem', background: 'rgba(212,175,55,0.08)', borderRadius: '8px', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                            {selectedBook.cover_image_url && (
+                                <img
+                                    src={selectedBook.cover_image_url}
+                                    alt={selectedBook.title}
+                                    style={{ width: '60px', height: '80px', objectFit: 'cover', borderRadius: '4px' }}
+                                />
+                            )}
+                            <div>
+                                <strong>{selectedBook.title}</strong><br />
+                                <code style={{ fontSize: '0.85rem', color: '#888' }}>/books/{selectedBook.slug}</code><br />
+                                <span style={{ fontSize: '0.8rem', color: '#666' }}>Button link auto-set to this URL</span>
+                            </div>
+                        </div>
+                    )}
                 </section>
 
                 {/* Settings */}
