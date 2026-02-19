@@ -196,38 +196,49 @@ export default function BookFormPage() {
         const file = files[0];
 
         try {
-            // Import PDF.js and render pages to WebP images
+            // Use pdfjs-dist with worker served from public/
             const pdfjsLib = await import('pdfjs-dist');
-            pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`;
+            pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
 
             const arrayBuffer = await file.arrayBuffer();
-            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+            const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer) }).promise;
+            const totalPages = pdf.numPages;
 
-            for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+            for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+                setError(`Converting page ${pageNum} of ${totalPages}...`);
+
                 const page = await pdf.getPage(pageNum);
-                const viewport = page.getViewport({ scale: 2 }); // 2x for quality
+                const viewport = page.getViewport({ scale: 2 });
 
                 const canvas = document.createElement('canvas');
                 canvas.width = viewport.width;
                 canvas.height = viewport.height;
                 const ctx = canvas.getContext('2d');
-                if (!ctx) continue;
+                if (!ctx) {
+                    setError(`Failed to create canvas for page ${pageNum}`);
+                    continue;
+                }
 
                 await page.render({ canvasContext: ctx, viewport } as never).promise;
 
                 // Convert canvas to WebP blob
-                const blob: Blob = await new Promise((resolve) => {
-                    canvas.toBlob((b) => resolve(b!), 'image/webp', 0.9);
+                const blob: Blob | null = await new Promise((resolve) => {
+                    canvas.toBlob((b) => resolve(b), 'image/webp', 0.9);
                 });
 
-                const fileName = `${bookId}/excerpts/page-${pageNum}-${Date.now()}.webp`;
+                if (!blob) {
+                    setError(`Failed to convert page ${pageNum} to WebP`);
+                    continue;
+                }
+
+                const storageName = `${bookId}/excerpts/page-${pageNum}-${Date.now()}.webp`;
 
                 const { data, error: uploadError } = await supabase.storage
                     .from('book-covers')
-                    .upload(fileName, blob, { upsert: true, contentType: 'image/webp' });
+                    .upload(storageName, blob, { upsert: true, contentType: 'image/webp' });
 
                 if (uploadError) {
-                    setError(`Failed to convert page ${pageNum}: ${uploadError.message}`);
+                    setError(`Failed to upload page ${pageNum}: ${uploadError.message}`);
                     continue;
                 }
 
@@ -239,7 +250,7 @@ export default function BookFormPage() {
                         book_id: bookId,
                         file_url: urlData.publicUrl,
                         file_name: `Page ${pageNum}`,
-                        label: `Page ${pageNum} of ${pdf.numPages}`,
+                        label: `Page ${pageNum} of ${totalPages}`,
                         display_order: excerpts.length + pageNum - 1
                     } as never)
                     .select()
@@ -248,8 +259,14 @@ export default function BookFormPage() {
                 if (excerptData) {
                     setExcerpts(prev => [...prev, excerptData as unknown as BookExcerpt]);
                 }
+
+                // Clean up
+                canvas.remove();
             }
+
+            setError(null);
         } catch (err) {
+            console.error('PDF conversion error:', err);
             setError('Failed to process PDF: ' + (err instanceof Error ? err.message : String(err)));
         }
 
