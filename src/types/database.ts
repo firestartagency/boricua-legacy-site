@@ -49,6 +49,16 @@ export interface Book {
     description: string | null;
     description_es: string | null;
     cover_image_url: string | null;
+    page_count: number | null;
+    publication_date: string | null;
+    language: string | null;
+    audience: string | null;
+    about_text: string | null;
+    author_title: string | null;
+    author_bio: string | null;
+    author_quote: string | null;
+    author_image_url: string | null;
+    author_signature_url: string | null;
     is_active: boolean;
     created_at: string;
     updated_at: string;
@@ -97,6 +107,7 @@ export interface BookEdition {
     format_name: string;
     price: number;
     purchase_link: string | null;
+    isbn: string | null;
     is_featured: boolean;
     display_order: number;
     created_at: string;
@@ -141,6 +152,7 @@ export type HeroSlideUpdate = Partial<HeroSlideInsert>;
 export interface CollectionItem {
     id: string;
     collection_id: string;
+    book_id: string | null;
     name: string;
     name_es: string | null;
     type: 'book' | 'merch' | 'resource' | 'digital' | 'other';
@@ -153,6 +165,18 @@ export interface CollectionItem {
     grid_size: 'featured' | 'standard' | 'hidden';
     display_order: number;
     is_active: boolean;
+    created_at: string;
+}
+
+// ============================================
+// Book Reviews
+// ============================================
+export interface BookReview {
+    id: string;
+    book_id: string;
+    quote: string;
+    source_name: string;
+    display_order: number;
     created_at: string;
 }
 

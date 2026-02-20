@@ -1,6 +1,16 @@
 import styles from './BookAuthor.module.css';
 
-const BookAuthor = () => {
+interface BookAuthorProps {
+    name?: string | null;
+    title?: string | null;
+    quote?: string | null;
+    imageUrl?: string | null;
+    signatureUrl?: string | null;
+}
+
+const BookAuthor = ({ name, title, quote, imageUrl, signatureUrl }: BookAuthorProps) => {
+    if (!name) return null;
+
     return (
         <div className={styles.card}>
             <div className={styles.borderTL}></div>
@@ -10,16 +20,25 @@ const BookAuthor = () => {
 
             <div className={styles.content}>
                 <div className={styles.imageWrapper}>
-                    {/* Placeholder for author image */}
-                    <div className={styles.authorImage}></div>
+                    {imageUrl ? (
+                        <img src={imageUrl} alt={name} className={styles.authorImage} />
+                    ) : (
+                        <div className={styles.authorImage}></div>
+                    )}
                 </div>
 
-                <h4 className={styles.name}>Jacqueline Jiménez</h4>
-                <p className={styles.role}>Author &amp; Historian</p>
-                <p className={styles.quote}>
-                    &quot;History is not what happened. It is what we choose to remember.&quot;
-                </p>
-                <p className={styles.signature}>Jacqueline</p>
+                <h4 className={styles.name}>{name}</h4>
+                {title && <p className={styles.role}>{title}</p>}
+                {quote && (
+                    <p className={styles.quote}>
+                        &quot;{quote}&quot;
+                    </p>
+                )}
+                {signatureUrl ? (
+                    <img src={signatureUrl} alt={`${name}'s signature`} className={styles.signatureImage} />
+                ) : (
+                    name && <p className={styles.signature}>{name.split(' ')[0]}</p>
+                )}
             </div>
         </div>
     );

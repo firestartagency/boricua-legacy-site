@@ -60,15 +60,13 @@
 
 .authorImage {
     width: 6rem;
-    /* w-24 */
     height: 6rem;
     border-radius: 50%;
     border: 2px solid white;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    background-image: url('/design_assets/Boricua Legacy Homepage PNG Image/screen.png');
-    /* Placeholder */
     background-size: cover;
     background-position: center;
+    object-fit: cover;
 }
 
 .name {
@@ -99,4 +97,10 @@
     font-family: var(--font-great-vibes), cursive;
     font-size: 1.5rem;
     color: var(--accent-gold);
+}
+
+.signatureImage {
+    max-width: 120px;
+    height: auto;
+    margin-top: 0.5rem;
 }

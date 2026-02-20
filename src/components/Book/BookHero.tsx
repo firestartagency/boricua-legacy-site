@@ -11,9 +11,10 @@ const ExcerptViewer = lazy(() => import('./ExcerptViewer'));
 
 interface BookHeroProps {
     slug: string;
+    onEditionChange?: (editionId: string) => void;
 }
 
-const BookHero = ({ slug }: BookHeroProps) => {
+const BookHero = ({ slug, onEditionChange }: BookHeroProps) => {
     const supabase = createClientComponentClient();
     const searchParams = useSearchParams();
     const [book, setBook] = useState<Book | null>(null);
@@ -168,7 +169,10 @@ const BookHero = ({ slug }: BookHeroProps) => {
                                         type="radio"
                                         name="format"
                                         checked={selectedEdition === idx}
-                                        onChange={() => setSelectedEdition(idx)}
+                                        onChange={() => {
+                                            setSelectedEdition(idx);
+                                            onEditionChange?.(ed.id);
+                                        }}
                                         className={styles.radioInput}
                                     />
                                     <div className={`${styles.formatCard} ${selectedEdition === idx ? styles.formatCardActive : ''}`}>

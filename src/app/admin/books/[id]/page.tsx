@@ -3,7 +3,7 @@
 import { createClientComponentClient } from '@/lib/supabase';
 import { useEffect, useState, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import type { Book, BookImage, BookEdition, BookExcerpt } from '@/types/database';
+import type { Book, BookImage, BookEdition, BookExcerpt, BookReview } from '@/types/database';
 import styles from './form.module.css';
 
 export default function BookFormPage() {
@@ -29,6 +29,16 @@ export default function BookFormPage() {
         description: '',
         description_es: '',
         cover_image_url: '',
+        page_count: '',
+        publication_date: '',
+        language: 'English',
+        audience: '',
+        about_text: '',
+        author_title: '',
+        author_bio: '',
+        author_quote: '',
+        author_image_url: '',
+        author_signature_url: '',
         is_active: true
     });
 
@@ -36,14 +46,19 @@ export default function BookFormPage() {
     const [images, setImages] = useState<BookImage[]>([]);
     const [editions, setEditions] = useState<BookEdition[]>([]);
     const [excerpts, setExcerpts] = useState<BookExcerpt[]>([]);
+    const [reviews, setReviews] = useState<BookReview[]>([]);
 
     // New edition form
     const [newEdition, setNewEdition] = useState({
         format_name: 'Hardcover',
         price: 0,
         purchase_link: '',
+        isbn: '',
         is_featured: false
     });
+
+    // New review form
+    const [newReview, setNewReview] = useState({ quote: '', source_name: '' });
 
     useEffect(() => {
         if (!isNew && bookId) {
@@ -71,20 +86,32 @@ export default function BookFormPage() {
                 description: book.description || '',
                 description_es: book.description_es || '',
                 cover_image_url: book.cover_image_url || '',
+                page_count: book.page_count?.toString() || '',
+                publication_date: book.publication_date || '',
+                language: book.language || 'English',
+                audience: book.audience || '',
+                about_text: book.about_text || '',
+                author_title: book.author_title || '',
+                author_bio: book.author_bio || '',
+                author_quote: book.author_quote || '',
+                author_image_url: book.author_image_url || '',
+                author_signature_url: book.author_signature_url || '',
                 is_active: book.is_active
             });
         }
 
         // Fetch related data
-        const [imagesRes, editionsRes, excerptsRes] = await Promise.all([
+        const [imagesRes, editionsRes, excerptsRes, reviewsRes] = await Promise.all([
             supabase.from('book_images').select('*').eq('book_id', bookId).order('display_order'),
             supabase.from('book_editions').select('*').eq('book_id', bookId).order('display_order'),
-            supabase.from('book_excerpts').select('*').eq('book_id', bookId).order('display_order')
+            supabase.from('book_excerpts').select('*').eq('book_id', bookId).order('display_order'),
+            supabase.from('book_reviews').select('*').eq('book_id', bookId).order('display_order')
         ]);
 
         setImages((imagesRes.data as unknown as BookImage[]) || []);
         setEditions((editionsRes.data as unknown as BookEdition[]) || []);
         setExcerpts((excerptsRes.data as unknown as BookExcerpt[]) || []);
+        setReviews((reviewsRes.data as unknown as BookReview[]) || []);
         setIsLoading(false);
     };
 
@@ -168,6 +195,7 @@ export default function BookFormPage() {
                 format_name: newEdition.format_name,
                 price: newEdition.price,
                 purchase_link: newEdition.purchase_link || null,
+                isbn: newEdition.isbn || null,
                 is_featured: newEdition.is_featured,
                 display_order: editions.length
             } as never)
@@ -176,7 +204,7 @@ export default function BookFormPage() {
 
         if (data) {
             setEditions(prev => [...prev, data as unknown as BookEdition]);
-            setNewEdition({ format_name: 'Hardcover', price: 0, purchase_link: '', is_featured: false });
+            setNewEdition({ format_name: 'Hardcover', price: 0, purchase_link: '', isbn: '', is_featured: false });
         }
     };
 
@@ -279,6 +307,32 @@ export default function BookFormPage() {
         setExcerpts(prev => prev.filter(e => e.id !== excerptId));
     };
 
+    // --- REVIEW HANDLERS ---
+    const addReview = async () => {
+        if (!bookId || !newReview.quote || !newReview.source_name) return;
+
+        const { data } = await supabase
+            .from('book_reviews')
+            .insert({
+                book_id: bookId,
+                quote: newReview.quote,
+                source_name: newReview.source_name,
+                display_order: reviews.length
+            } as never)
+            .select()
+            .single();
+
+        if (data) {
+            setReviews(prev => [...prev, data as unknown as BookReview]);
+            setNewReview({ quote: '', source_name: '' });
+        }
+    };
+
+    const deleteReview = async (reviewId: string) => {
+        await supabase.from('book_reviews').delete().eq('id', reviewId);
+        setReviews(prev => prev.filter(r => r.id !== reviewId));
+    };
+
 
     // --- BOOK FORM HANDLERS ---
     const generateSlug = () => {
@@ -294,7 +348,10 @@ export default function BookFormPage() {
         setIsSaving(true);
         setError(null);
 
-        const payload = { ...formData };
+        const payload = {
+            ...formData,
+            page_count: formData.page_count ? parseInt(formData.page_count) : null
+        };
 
         if (isNew) {
             const { data: newBook, error: insertErr } = await supabase
@@ -392,6 +449,69 @@ export default function BookFormPage() {
                     </div>
                 </section>
 
+                {/* Book Details Section */}
+                <section className={styles.section}>
+                    <h2>📊 Book Details</h2>
+                    <div className={styles.row}>
+                        <div className={styles.field}>
+                            <label>Page Count</label>
+                            <input name="page_count" type="number" value={formData.page_count} onChange={handleChange} placeholder="e.g. 342" />
+                        </div>
+                        <div className={styles.field}>
+                            <label>Publication Date</label>
+                            <input name="publication_date" value={formData.publication_date} onChange={handleChange} placeholder="e.g. Oct 2024" />
+                        </div>
+                    </div>
+                    <div className={styles.row}>
+                        <div className={styles.field}>
+                            <label>Language</label>
+                            <input name="language" value={formData.language} onChange={handleChange} placeholder="e.g. English / Spanish" />
+                        </div>
+                        <div className={styles.field}>
+                            <label>Audience</label>
+                            <input name="audience" value={formData.audience} onChange={handleChange} placeholder="e.g. General / YA" />
+                        </div>
+                    </div>
+                </section>
+
+                {/* About Text Section */}
+                <section className={styles.section}>
+                    <h2>📖 About This Book</h2>
+                    <p className={styles.hint}>Long-form about text shown on the book page. Separate paragraphs with blank lines.</p>
+                    <div className={styles.field}>
+                        <textarea name="about_text" value={formData.about_text} onChange={handleChange} rows={8} placeholder="Enter the about section text..." />
+                    </div>
+                </section>
+
+                {/* Author Info Section */}
+                <section className={styles.section}>
+                    <h2>✍️ Author Information</h2>
+                    <div className={styles.row}>
+                        <div className={styles.field}>
+                            <label>Author Title / Role</label>
+                            <input name="author_title" value={formData.author_title} onChange={handleChange} placeholder="e.g. Author & Historian" />
+                        </div>
+                        <div className={styles.field}>
+                            <label>Author Quote</label>
+                            <input name="author_quote" value={formData.author_quote} onChange={handleChange} placeholder="A memorable quote from the author" />
+                        </div>
+                    </div>
+                    <div className={styles.row}>
+                        <div className={styles.field}>
+                            <label>Author Image URL</label>
+                            <input name="author_image_url" value={formData.author_image_url} onChange={handleChange} placeholder="https://..." />
+                        </div>
+                        <div className={styles.field}>
+                            <label>Author Signature Image URL</label>
+                            <input name="author_signature_url" value={formData.author_signature_url} onChange={handleChange} placeholder="https://..." />
+                        </div>
+                    </div>
+                    <div className={styles.field}>
+                        <label>Author Bio</label>
+                        <textarea name="author_bio" value={formData.author_bio} onChange={handleChange} rows={3} placeholder="Short biography of the author..." />
+                    </div>
+                </section>
+
                 {/* Active Toggle */}
                 <section className={styles.section}>
                     <div className={styles.checkboxField}>
@@ -478,6 +598,7 @@ export default function BookFormPage() {
                                             {ed.is_featured && <span className={styles.featuredBadge}>Featured</span>}
                                         </span>
                                         <span className={styles.editionPrice}>${Number(ed.price).toFixed(2)}</span>
+                                        {ed.isbn && <span className={styles.editionLink}>ISBN: {ed.isbn}</span>}
                                         {ed.purchase_link && (
                                             <a href={ed.purchase_link} target="_blank" rel="noopener noreferrer" className={styles.editionLink}>
                                                 Link ↗
@@ -514,6 +635,12 @@ export default function BookFormPage() {
                                 value={newEdition.purchase_link}
                                 onChange={e => setNewEdition(prev => ({ ...prev, purchase_link: e.target.value }))}
                             />
+                            <input
+                                type="text"
+                                placeholder="ISBN (e.g. 978-1-5266)"
+                                value={newEdition.isbn}
+                                onChange={e => setNewEdition(prev => ({ ...prev, isbn: e.target.value }))}
+                            />
                             <label className={styles.inlineCheckbox}>
                                 <input
                                     type="checkbox"
@@ -523,6 +650,45 @@ export default function BookFormPage() {
                                 Featured
                             </label>
                             <button type="button" onClick={addEdition} className={styles.addBtn}>
+                                + Add
+                            </button>
+                        </div>
+                    </section>
+
+                    {/* Reviews Section */}
+                    <section className={styles.section} style={{ marginTop: '1.5rem' }}>
+                        <h2>⭐ Reviews / Critical Acclaim</h2>
+                        <p className={styles.hint}>Add quotes from reviewers and publications.</p>
+
+                        {reviews.length > 0 && (
+                            <div className={styles.editionsList}>
+                                {reviews.map(rev => (
+                                    <div key={rev.id} className={styles.editionRow}>
+                                        <span className={styles.editionFormat}>
+                                            &quot;{rev.quote.length > 60 ? rev.quote.slice(0, 60) + '...' : rev.quote}&quot;
+                                        </span>
+                                        <span className={styles.editionPrice}>— {rev.source_name}</span>
+                                        <button type="button" onClick={() => deleteReview(rev.id)} className={styles.deleteSmBtn}>✕</button>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                        <div className={styles.addEditionForm}>
+                            <textarea
+                                placeholder="Review quote"
+                                value={newReview.quote}
+                                onChange={e => setNewReview(prev => ({ ...prev, quote: e.target.value }))}
+                                rows={2}
+                                style={{ flex: 2 }}
+                            />
+                            <input
+                                type="text"
+                                placeholder="Source (e.g. The Caribbean Review)"
+                                value={newReview.source_name}
+                                onChange={e => setNewReview(prev => ({ ...prev, source_name: e.target.value }))}
+                            />
+                            <button type="button" onClick={addReview} className={styles.addBtn} disabled={!newReview.quote || !newReview.source_name}>
                                 + Add
                             </button>
                         </div>

@@ -1,77 +1,55 @@
 import Link from 'next/link';
 import styles from './RelatedBooks.module.css';
+import type { CollectionItem } from '@/types/database';
 
-const RelatedBooks = () => {
+interface RelatedBooksProps {
+    collectionItems: CollectionItem[];
+    collectionTitle?: string;
+}
+
+const RelatedBooks = ({ collectionItems, collectionTitle }: RelatedBooksProps) => {
+    if (collectionItems.length === 0) return null;
+
     return (
         <section className={styles.section}>
             <div className={styles.container}>
                 <div className={styles.header}>
                     <h2 className={styles.heading}>More From This Collection</h2>
-                    <Link href="/collection" className={styles.viewAllLink}>
-                        View Full Series
+                    <Link href="/collections" className={styles.viewAllLink}>
+                        {collectionTitle ? `View ${collectionTitle}` : 'View Full Series'}
                         <span className="material-symbols-outlined">arrow_forward</span>
                     </Link>
                 </div>
 
                 <div className={styles.grid}>
-
-                    {/* Item 1 */}
-                    <div className={styles.card}>
-                        <div className={styles.bookThumb}>
-                            <div className={styles.cornerTag}></div>
-                            <div className={styles.bookIcon}>
-                                <span className="material-symbols-outlined">book_2</span>
+                    {collectionItems.map((item) => (
+                        <div key={item.id} className={styles.card}>
+                            <div className={styles.bookThumb}>
+                                {item.image_url ? (
+                                    <img
+                                        src={item.image_url}
+                                        alt={item.name}
+                                        className={styles.thumbImage}
+                                    />
+                                ) : (
+                                    <div className={styles.bookIcon}>
+                                        <span className="material-symbols-outlined">
+                                            {item.type === 'book' ? 'book_2' : item.type === 'merch' ? 'shopping_bag' : 'inventory_2'}
+                                        </span>
+                                    </div>
+                                )}
                             </div>
-                            <div className={styles.overlay}>
-                                <span className={styles.volLabel}>VOL. II</span>
-                            </div>
+                            <h3 className={styles.bookTitle}>{item.name}</h3>
+                            {item.price != null && (
+                                <p className={styles.releaseDate}>${item.price.toFixed(2)}</p>
+                            )}
+                            {item.purchase_url && (
+                                <a href={item.purchase_url} target="_blank" rel="noopener noreferrer" className={styles.viewAllLink}>
+                                    View →
+                                </a>
+                            )}
                         </div>
-                        <h3 className={styles.bookTitle}>Voices of the Diaspora</h3>
-                        <p className={styles.releaseDate}>Coming Spring 2025</p>
-                    </div>
-
-                    {/* Item 2 */}
-                    <div className={styles.card}>
-                        <div className={styles.bookThumb}>
-                            <div className={styles.bookIcon}>
-                                <span className="material-symbols-outlined">book_2</span>
-                            </div>
-                            <div className={styles.overlay}>
-                                <span className={styles.volLabel}>VOL. III</span>
-                            </div>
-                        </div>
-                        <h3 className={styles.bookTitle}>Legends of Borikén</h3>
-                        <p className={styles.releaseDate}>Coming Fall 2025</p>
-                    </div>
-
-                    {/* Item 3 */}
-                    <div className={styles.card}>
-                        <div className={styles.bookThumb}>
-                            <div className={styles.bookIcon}>
-                                <span className="material-symbols-outlined">book_2</span>
-                            </div>
-                            <div className={styles.overlay}>
-                                <span className={styles.volLabel}>VOL. IV</span>
-                            </div>
-                        </div>
-                        <h3 className={styles.bookTitle}>Arts &amp; Resistance</h3>
-                        <p className={styles.releaseDate}>Coming 2026</p>
-                    </div>
-
-                    {/* Item 4 (Sold Out) */}
-                    <div className={styles.card}>
-                        <div className={`${styles.bookThumb} ${styles.soldOutThumb}`}>
-                            <div className={styles.soldOutBadge}>
-                                Sold Out
-                            </div>
-                            <div className={styles.bookIcon}>
-                                <span className="material-symbols-outlined">book_2</span>
-                            </div>
-                        </div>
-                        <h3 className={`${styles.bookTitle} ${styles.textMuted}`}>The First Colony</h3>
-                        <p className={`${styles.releaseDate} ${styles.textMuted}`}>Legacy Edition</p>
-                    </div>
-
+                    ))}
                 </div>
             </div>
         </section>

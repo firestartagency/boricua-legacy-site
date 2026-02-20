@@ -69,6 +69,12 @@
     overflow: hidden;
 }
 
+.thumbImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .card:hover .bookThumb {
     transform: translateY(-0.5rem);
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
